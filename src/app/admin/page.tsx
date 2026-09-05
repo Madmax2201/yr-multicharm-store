@@ -26,7 +26,6 @@ interface DashboardData {
     fullName: string;
     status: string;
     total: number;
-    createdAt: string;
   }[];
   lowStock: {
     id: string;

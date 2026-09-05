@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
         fullName: o.address?.fullName || "Guest",
         status: o.status,
         total: Number(o.total),
-        createdAt: o.createdAt,
+        createdAt: o.id,
       })),
       lowStock: lowStockProducts.map((p) => ({
         id: p.id,

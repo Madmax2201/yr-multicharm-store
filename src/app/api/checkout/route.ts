@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     let discount = 0;
 
     for (const item of items) {
-      const product = await (prisma.product.findUnique as any)({
+      const product = await prisma.product.findUnique({
         where: { id: item.productId },
       });
       if (!product || !product.isActive) {
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
 
       let itemPrice = product.price;
       if (item.variantId) {
-        const variant = await (prisma.productVariant.findUnique as any)({
+        const variant = await prisma.productVariant.findUnique({
           where: { id: item.variantId },
         });
         if (variant) {
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (couponCode) {
-      const coupon = await (prisma.coupon.findUnique as any)({
+      const coupon = await prisma.coupon.findUnique({
         where: { code: couponCode },
       });
       if (
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
         }
         discount = Math.min(discount, total);
 
-        await (prisma.coupon.update as any)({
+        await prisma.coupon.update({
           where: { id: coupon.id },
           data: { usedCount: { increment: 1 } },
         });
@@ -79,22 +79,24 @@ export async function POST(request: NextRequest) {
     const orderNumber = generateOrderNumber();
     const finalTotal = total - discount;
 
-    const order = await (prisma.order.create as any)({
+    const address = await prisma.address.create({
       data: {
-        orderNumber,
-        userId: user?.userId || null,
-        total: finalTotal,
-        discount,
-        couponCode,
-        paymentMethod: "COD",
-        paymentStatus: "UNPAID",
         fullName,
         street,
         city,
         state,
         zipCode,
         phone,
-        notes,
+        userId: user?.userId || undefined,
+      },
+    });
+
+    const order = await prisma.order.create({
+      data: {
+        orderNumber,
+        userId: user?.userId || null,
+        total: finalTotal,
+        addressId: address.id,
         items: {
           create: items.map((item: any) => ({
             productId: item.productId,
@@ -110,13 +112,13 @@ export async function POST(request: NextRequest) {
     });
 
     for (const item of items) {
-      await (prisma.product.update as any)({
+      await prisma.product.update({
         where: { id: item.productId },
         data: { stock: { decrement: item.quantity } },
       });
     }
 
-    const customerEmail = email || (user ? (await (prisma.user.findUnique as any)({ where: { id: user.userId } }))?.email : null);
+    const customerEmail = email || (user ? (await prisma.user.findUnique({ where: { id: user.userId } }))?.email : null);
 
     if (customerEmail) {
       sendOrderConfirmation({
@@ -124,7 +126,7 @@ export async function POST(request: NextRequest) {
         email: customerEmail,
         fullName,
         total: finalTotal,
-        items: (order.items as any[]).map((i: any) => ({
+        items: order.items.map((i) => ({
           productName: i.productName,
           quantity: i.quantity,
           price: i.price,

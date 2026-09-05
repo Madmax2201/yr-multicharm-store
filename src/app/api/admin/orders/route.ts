@@ -17,18 +17,26 @@ export async function GET(request: NextRequest) {
   if (status) where.status = status;
 
   const [orders, total] = await Promise.all([
-    (prisma.order.findMany as any)({
+    prisma.order.findMany({
       where,
-      orderBy: { createdAt: "desc" },
+      orderBy: { id: "desc" },
       skip: (page - 1) * limit,
       take: limit,
       include: {
-        user: { select: { name: true, email: true } },
+        address: { select: { fullName: true } },
         items: true,
       },
     }),
-    (prisma.order.count as any)({ where }),
+    prisma.order.count({ where }),
   ]);
 
-  return NextResponse.json({ orders, total, page, totalPages: Math.ceil(total / limit) });
+  return NextResponse.json({
+    orders: orders.map((o) => ({
+      ...o,
+      fullName: o.address?.fullName || "Guest",
+    })),
+    total,
+    page,
+    totalPages: Math.ceil(total / limit),
+  });
 }

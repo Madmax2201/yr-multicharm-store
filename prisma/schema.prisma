@@ -1,0 +1,153 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("USER")
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orders       Order[]
+  reviews      Review[]
+  wishlist     WishlistItem[]
+  addresses    Address[]
+}
+
+model Product {
+  id           String   @id @default(cuid())
+  name         String
+  description  String
+  price        Float
+  comparePrice Float?
+  images       String
+  category     String
+  subcategory  String?
+  brand        String?
+  ingredients  String?
+  howToUse     String?
+  stock        Int      @default(0)
+  isActive     Boolean  @default(true)
+  featured     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  variants     ProductVariant[]
+  reviews      Review[]
+  wishlist     WishlistItem[]
+  orderItems   OrderItem[]
+  coupons      CouponProduct[]
+}
+
+model ProductVariant {
+  id        String  @id @default(cuid())
+  productId String
+  name      String
+  price     Float?
+  stock     Int     @default(0)
+  sku       String  @unique
+
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  comment   String?
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@unique([userId, productId])
+}
+
+model Address {
+  id        String  @id @default(cuid())
+  userId    String
+  fullName  String
+  street    String
+  city      String
+  state     String
+  zipCode   String
+  phone     String
+  isDefault Boolean @default(false)
+
+  user   User   @relation(fields: [userId], references: [id])
+  orders Order[]
+}
+
+model Order {
+  id            String   @id @default(cuid())
+  orderNumber   String   @unique
+  userId        String?
+  status        String   @default("PENDING")
+  total         Float    @default(0)
+
+  user    User?       @relation(fields: [userId], references: [id])
+  address Address?    @relation(fields: [addressId], references: [id])
+  addressId String?
+  items   OrderItem[]
+}
+
+model OrderItem {
+  id          String  @id @default(cuid())
+  orderId     String
+  productId   String
+  variantId   String?
+  productName String
+  variantName String?
+  price       Float
+  quantity    Int
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model WishlistItem {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@unique([userId, productId])
+}
+
+model Coupon {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  discount  Float
+  type      String   @default("PERCENTAGE")
+  minAmount Float?
+  maxUses   Int?
+  usedCount Int      @default(0)
+  expiresAt DateTime?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  products CouponProduct[]
+}
+
+model CouponProduct {
+  couponId  String
+  productId String
+
+  coupon  Coupon  @relation(fields: [couponId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@id([couponId, productId])
+}

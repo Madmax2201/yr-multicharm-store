@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-arabic: 'Noto Sans Arabic', sans-serif;
+  --color-primary: #a855f7;
+  --color-primary-dark: #7c3aed;
+  --color-primary-light: #f3e8ff;
+  --color-secondary: #c084fc;
+  --color-accent: #8b5cf6;
+  --color-rose-petal: #faf5ff;
+  --color-rose-dark: #4c1d95;
+}
+
+:root {
+  --bg: #faf5ff;
+  --fg: #1a0a2e;
+  --card: #ffffff;
+  --card-fg: #1a0a2e;
+  --border: #e9d5ff;
+  --muted: #6b21a8;
+  --muted-bg: #f3e8ff;
+}
+
+.dark {
+  --bg: #0a0510;
+  --fg: #faf5ff;
+  --card: #1a0a2e;
+  --card-fg: #faf5ff;
+  --border: #3b1a5e;
+  --muted: #c4b5fd;
+  --muted-bg: #1a0a2e;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+:lang(ar) body,
+[dir="rtl"] body,
+[dir="rtl"] {
+  font-family: var(--font-arabic, 'Noto Sans Arabic', sans-serif);
+}
+
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4 {
+  font-family: var(--font-arabic, 'Noto Sans Arabic', sans-serif);
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', serif;
+}

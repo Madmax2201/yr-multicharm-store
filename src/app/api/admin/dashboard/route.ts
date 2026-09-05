@@ -13,13 +13,13 @@ export async function GET(request: NextRequest) {
   const totalUsers = await prisma.user.count();
 
   const recentOrdersRaw = await prisma.$queryRawUnsafe<any[]>(
-    'SELECT id, orderNumber, fullName, status, total, createdAt FROM "Order" ORDER BY createdAt DESC LIMIT 5'
+    'SELECT id, "orderNumber", "fullName", status, total, "createdAt" FROM "Order" ORDER BY "createdAt" DESC LIMIT 5'
   );
   const lowStockRaw = await prisma.$queryRawUnsafe<any[]>(
-    'SELECT id, name, stock FROM "Product" WHERE stock <= 5 AND isActive = 1 LIMIT 5'
+    'SELECT id, name, stock FROM "Product" WHERE stock <= 5 AND "isActive" = true LIMIT 5'
   );
   const revenueRaw = await prisma.$queryRawUnsafe<any[]>(
-    'SELECT COALESCE(SUM(total), 0) as revenue FROM "Order" WHERE status = ?',
+    'SELECT COALESCE(SUM(total), 0) as revenue FROM "Order" WHERE status = $1',
     "DELIVERED"
   );
 

@@ -1,7 +1,9 @@
 import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcryptjs";
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
   console.log("Seeding database...");
@@ -40,9 +42,7 @@ async function main() {
       description: "جهاز ليزر منزلي اقتصادي وعملي لإزالة الشعر، بـ 999,999 ومضة، 5 مستويات طاقة، تبريد عالي، ووضع تلقائي ذكي لراحة أكبر ونتائج تدريجية مع الاستمرار.",
       price: 18000.00,
       comparePrice: null,
-      images: JSON.stringify([
-        "/images/IPL-02.png",
-      ]),
+      images: JSON.stringify(["/images/IPL-02.png"]),
       category: "beauty-devices",
       subcategory: "Hair Removal",
       brand: "IPL",
@@ -61,9 +61,7 @@ async function main() {
       description: "جهاز ليزر منزلي متطور لإزالة الشعر والعناية بالبشرة، يحتوي على 999,999 ومضة، 9 مستويات طاقة، و3 أوضاع ذكية HR / FR / SR للشعر، النضارة، وتحسين مظهر البشرة. مزود بخاصية التبريد ووضع تلقائي ذكي لتجربة أسهل وأكثر راحة، مع نتائج تدريجية لبشرة أنعم مع الاستمرار.",
       price: 29500.00,
       comparePrice: null,
-      images: JSON.stringify([
-        "/images/IPL-03.png",
-      ]),
+      images: JSON.stringify(["/images/IPL-03.png"]),
       category: "beauty-devices",
       subcategory: "Hair Removal",
       brand: "YR Multicharm",
@@ -82,9 +80,7 @@ async function main() {
       description: "جهاز IPL منزلي لإزالة الشعر بتقنية الضوء النبضي، مصمم لاستعمال سهل ومريح من المنزل. يحتوي على 999,999 ومضة، مع خاصية التبريد لتجربة ألطف على البشرة، ويأتي مع نظارات حماية وشفرة تحضير للاستعمال العملي. خيار مناسب لمن تبحث عن جهاز اقتصادي وفعال للعناية المنتظمة بالبشرة.",
       price: 31000.00,
       comparePrice: null,
-      images: JSON.stringify([
-        "/images/acura-99.jpg",
-      ]),
+      images: JSON.stringify(["/images/acura-99.jpg"]),
       category: "beauty-devices",
       subcategory: "Hair Removal",
       brand: "Acura",
@@ -103,9 +99,7 @@ async function main() {
       description: "جهاز منزلي لإزالة الشعر IPL، عملي وسهل الاستعمال، يحتوي على 500,000 ومضة، 5 مستويات طاقة، برمجة أوتوماتيكية وخاصية التبريد لتجربة أكثر راحة. مناسب للعناية المنتظمة من المنزل ويساعد على تقليل نمو الشعر تدريجياً مع الاستمرار.",
       price: 35000.00,
       comparePrice: null,
-      images: JSON.stringify([
-        "/images/mlay-t14.jpg",
-      ]),
+      images: JSON.stringify(["/images/mlay-t14.jpg"]),
       category: "beauty-devices",
       subcategory: "Hair Removal",
       brand: "MLAY",
@@ -124,14 +118,12 @@ async function main() {
       description: "جهاز IPL منزلي لإزالة الشعر، بتصميم عملي وشاشة رقمية سهلة التحكم. يحتوي على 999,999 ومضة، 5 مستويات طاقة، ورأس قابل للتبديل لتجربة استعمال مريحة ومنظمة، يساعد على تقليل نمو الشعر تدريجياً والحصول على بشرة أنعم مع الاستمرار.",
       price: 45000.00,
       comparePrice: null,
-      images: JSON.stringify([
-        "/images/mlay-t16.jpg",
-      ]),
+      images: JSON.stringify(["/images/mlay-t16.jpg"]),
       category: "beauty-devices",
       subcategory: "Hair Removal",
       brand: "MLAY",
       ingredients: null,
-      howToUse: "استخدم الجهاز على البشرة النظيفة والجافة. ابدأ بأدنى مستوى طاقة وزد تدريجياً حسب راحة البشرة. استخدم الرأس المناسب حسب المنطقة treatment.",
+      howToUse: "استخدم الجهاز على البشرة النظيفة والجافة. ابدأ بأدنى مستوى طاقة وزد تدريجياً حسب راحة البشرة. استخدم الرأس المناسب حسب المنطقة.",
       stock: 50,
       featured: true,
       variants: {
@@ -145,9 +137,7 @@ async function main() {
       description: "جهاز ليزر منزلي متطور لإزالة الشعر، يتميز بتقنية ذكية تتكيف مع البشرة، 3 درجات قوة، وخاصية التبريد الفوري لتجربة أكثر راحة. تصميمه أنيق وخفيف وسهل الاستعمال، مناسب للعناية المنتظمة في المنزل ويساعد على تقليل نمو الشعر تدريجياً لبشرة أنعم مع الاستمرار.",
       price: 39500.00,
       comparePrice: null,
-      images: JSON.stringify([
-        "/images/mlay-t18.jpg",
-      ]),
+      images: JSON.stringify(["/images/mlay-t18.jpg"]),
       category: "beauty-devices",
       subcategory: "Hair Removal",
       brand: "MLAY",
@@ -166,9 +156,7 @@ async function main() {
       description: "جهاز لإزالة الشعر والعناية بالبشرة، من أقوى الأجهزة المنزلية متعددة الاستعمال. يحتوي على 900,000 ومضة، 8 مستويات طاقة، 4 رؤوس مختلفة، وخاصية التبريد لتجربة أكثر راحة. مناسب لتقليل نمو الشعر تدريجياً والعناية بمظهر البشرة من المنزل بطريقة سهلة ومنظمة.",
       price: 55000.00,
       comparePrice: null,
-      images: JSON.stringify([
-        "/images/kodo.jpg",
-      ]),
+      images: JSON.stringify(["/images/kodo.jpg"]),
       category: "beauty-devices",
       subcategory: "Hair Removal",
       brand: "KODO",
@@ -187,9 +175,7 @@ async function main() {
       description: "جهاز IPL منزلي يحتوي على 450,000 ومضة، 5 مستويات طاقة، ويعمل بالبطارية لحرية استعمال أكبر. مناسب لمن تبحث عن جهاز عملي لبشرة أنعم ونتائج تدريجية مع الاستمرار.",
       price: 120000.00,
       comparePrice: null,
-      images: JSON.stringify([
-        "/images/philips-lumea.jpg",
-      ]),
+      images: JSON.stringify(["/images/philips-lumea.jpg"]),
       category: "beauty-devices",
       subcategory: "Hair Removal",
       brand: "Philips",
@@ -208,9 +194,7 @@ async function main() {
       description: "يتميز بـ 10 مستويات طاقة، و3 أنواع من الأشعة، مع قوة أداء عالية جدًا وجودة تصنيع ممتازة، ليمنحك تجربة استعمال منزلية عملية ومريحة للعناية بالبشرة وتقليل نمو الشعر تدريجيًا.",
       price: 68000.00,
       comparePrice: null,
-      images: JSON.stringify([
-        "/images/anlan-v4s.jpg",
-      ]),
+      images: JSON.stringify(["/images/anlan-v4s.jpg"]),
       category: "beauty-devices",
       subcategory: "Hair Removal",
       brand: "ANLAN",
@@ -229,9 +213,7 @@ async function main() {
       description: "جهاز ليزر منزلي متقدم لإزالة الشعر بتقنية ديود 810 نانومتر، مصمم ليمنحك تجربة عناية العيادة داخل منزلك. يتميز بومضات تلقائية لتسهيل الاستخدام، ونظام تبريد يساعد على جعل الجلسة أكثر راحة. خيار مثالي لمن تبحث عن جهاز قوي، عملي، وعالي الجودة لتقليل نمو الشعر.",
       price: 140000.00,
       comparePrice: null,
-      images: JSON.stringify([
-        "/images/dermrays-v4s.jpg",
-      ]),
+      images: JSON.stringify(["/images/dermrays-v4s.jpg"]),
       category: "beauty-devices",
       subcategory: "Hair Removal",
       brand: "DermRays",
@@ -250,9 +232,7 @@ async function main() {
       description: "جهاز ليزر منزلي بتقنية الديود لإزالة الشعر، مصمم ليمنحك تجربة عناية قريبة من العيادة داخل المنزل. يتميز بقوة أداء عالية، تصميم مريح وسهل الاستخدام، وتقنية احترافية تساعد على تقليل نمو الشعر تدريجياً مع الاستعمال المنتظم. خيار مناسب لمن تبحث عن جهاز قوي وموثوق للعناية بالبشرة والحصول على نعومة تدوم لفترة أطول.",
       price: 139000.00,
       comparePrice: null,
-      images: JSON.stringify([
-        "/images/tria-4x.jpg",
-      ]),
+      images: JSON.stringify(["/images/tria-4x.jpg"]),
       category: "beauty-devices",
       subcategory: "Hair Removal",
       brand: "Tria",
@@ -271,9 +251,7 @@ async function main() {
       description: "جهاز IPL منزلي عالي الجودة لإزالة الشعر، مصمم للاستعمال السهل والآمن في المنزل. يحتوي على 400,000 ومضة، 3 درجات طاقة، ويمنحك تجربة عملية ومريحة للعناية المنتظمة بالبشرة، مع نتائج تدريجية لبشرة أنعم مع الاستمرار.",
       price: 135000.00,
       comparePrice: null,
-      images: JSON.stringify([
-        "/images/braun-pro5.jpg",
-      ]),
+      images: JSON.stringify(["/images/braun-pro5.jpg"]),
       category: "beauty-devices",
       subcategory: "Hair Removal",
       brand: "Braun",

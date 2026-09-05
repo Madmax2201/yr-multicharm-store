@@ -5,12 +5,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { useLanguage } from "@/lib/i18n/context";
-import { formatPrice, formatDate } from "@/lib/utils";
+import { formatPrice } from "@/lib/utils";
 import {
   Package,
   ChevronLeft,
   MapPin,
-  CreditCard,
   Loader2,
   PackageOpen,
 } from "lucide-react";
@@ -36,10 +35,6 @@ interface Order {
   id: string;
   orderNumber: string;
   total: number;
-  discount: number;
-  couponCode?: string;
-  paymentMethod: string;
-  paymentStatus: string;
   status: string;
   fullName: string;
   street: string;
@@ -47,8 +42,6 @@ interface Order {
   state: string;
   zipCode: string;
   phone: string;
-  notes?: string;
-  createdAt: string;
   items: OrderItem[];
 }
 
@@ -112,11 +105,8 @@ export default function OrderDetailPage({
     );
   }
 
-  const itemTotal = order.items.reduce((s, i) => s + i.price * i.quantity, 0);
-
   return (
     <div className="mx-auto max-w-4xl px-4 py-10">
-      {/* Back link */}
       <Link
         href="/account/orders"
         className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--muted)] transition-colors hover:text-[var(--fg)]"
@@ -125,13 +115,11 @@ export default function OrderDetailPage({
         {t("account.orders.back")}
       </Link>
 
-      {/* Header */}
       <div className="mb-8 flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="font-serif text-2xl font-bold text-[var(--fg)]">
             Order {order.orderNumber}
           </h1>
-          <p className="mt-1 text-sm text-[var(--muted)]">{formatDate(order.createdAt)}</p>
         </div>
         <span
           className={`rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider ${
@@ -144,7 +132,6 @@ export default function OrderDetailPage({
 
       <div className="grid gap-8 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
-          {/* Items */}
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
             <h3 className="mb-4 flex items-center gap-2 font-semibold text-[var(--fg)]">
               <Package size={18} className="text-primary" />
@@ -173,69 +160,28 @@ export default function OrderDetailPage({
             </div>
           </div>
 
-          {/* Shipping Address */}
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
-            <h3 className="mb-3 flex items-center gap-2 font-semibold text-[var(--fg)]">
-              <MapPin size={18} className="text-primary" />
-              {t("account.orders.shipping")}
-            </h3>
-            <div className="text-sm text-[var(--fg)]">
-              <p className="font-medium">{order.fullName}</p>
-              <p className="text-[var(--muted)]">{order.street}</p>
-              <p className="text-[var(--muted)]">
-                {order.city}, {order.state} {order.zipCode}
-              </p>
-              <p className="text-[var(--muted)]">{order.phone}</p>
-            </div>
-            {order.notes && (
-              <div className="mt-3 rounded-lg bg-[var(--muted-bg)] p-3 text-sm text-[var(--muted)]">
-                <span className="font-medium text-[var(--fg)]">{t("account.orders.notes")}</span> {order.notes}
-              </div>
-            )}
-          </div>
-
-          {/* Payment */}
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
-            <h3 className="mb-3 flex items-center gap-2 font-semibold text-[var(--fg)]">
-              <CreditCard size={18} className="text-primary" />
-              {t("account.orders.payment")}
-            </h3>
-            <div className="space-y-1 text-sm">
-              <div className="flex justify-between">
-                <span className="text-[var(--muted)]">{t("account.orders.method")}</span>
-                <span className="font-medium text-[var(--fg)]">{order.paymentMethod}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[var(--muted)]">{t("account.orders.status")}</span>
-                <span
-                  className={`font-medium ${
-                    order.paymentStatus === "PAID" ? "text-green-600" : "text-amber-600"
-                  }`}
-                >
-                  {order.paymentStatus}
-                </span>
+          {order.fullName && (
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
+              <h3 className="mb-3 flex items-center gap-2 font-semibold text-[var(--fg)]">
+                <MapPin size={18} className="text-primary" />
+                {t("account.orders.shipping")}
+              </h3>
+              <div className="text-sm text-[var(--fg)]">
+                <p className="font-medium">{order.fullName}</p>
+                <p className="text-[var(--muted)]">{order.street}</p>
+                <p className="text-[var(--muted)]">
+                  {order.city}, {order.state} {order.zipCode}
+                </p>
+                <p className="text-[var(--muted)]">{order.phone}</p>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
-        {/* Summary Sidebar */}
         <div className="lg:col-span-1">
           <div className="sticky top-24 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
             <h3 className="mb-4 font-semibold text-[var(--fg)]">{t("account.orders.summary")}</h3>
             <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-[var(--muted)]">{t("account.orders.subtotal")}</span>
-                <span className="text-[var(--fg)]">{formatPrice(itemTotal)}</span>
-              </div>
-              {order.discount > 0 && (
-                <div className="flex justify-between">
-                  <span className="text-green-600">
-                    {t("account.orders.discount")}{order.couponCode ? ` (${order.couponCode})` : ""}
-                  </span>
-                  <span className="text-green-600">-{formatPrice(order.discount)}</span>
-                </div>
-              )}
               <div className="flex justify-between border-t border-[var(--border)] pt-2">
                 <span className="font-semibold text-[var(--fg)]">{t("account.orders.total")}</span>
                 <span className="font-serif text-lg font-bold text-[var(--fg)]">

@@ -41,7 +41,6 @@ interface Order {
   orderNumber: string;
   status: string;
   total: number;
-  createdAt: string;
   items: { productName: string; quantity: number; price: number }[];
 }
 
@@ -294,7 +293,7 @@ export default function AccountPage() {
                         <div>
                           <p className="text-sm font-medium text-purple-900">{order.orderNumber}</p>
                           <p className="text-xs text-purple-500">
-                            {new Date(order.createdAt).toLocaleDateString()} • {order.items.length} items
+                            {order.items.length} items
                           </p>
                         </div>
                       </div>

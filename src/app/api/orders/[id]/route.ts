@@ -15,12 +15,23 @@ export async function GET(
 
   const order = await prisma.order.findUnique({
     where: { id },
-    include: { items: true },
+    include: {
+      items: true,
+      address: true,
+    },
   });
 
   if (!order || (order.userId !== user.userId && user.role !== "ADMIN")) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  return NextResponse.json(order);
+  return NextResponse.json({
+    ...order,
+    fullName: order.address?.fullName || "",
+    street: order.address?.street || "",
+    city: order.address?.city || "",
+    state: order.address?.state || "",
+    zipCode: order.address?.zipCode || "",
+    phone: order.address?.phone || "",
+  });
 }

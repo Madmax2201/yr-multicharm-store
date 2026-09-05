@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { useLanguage } from "@/lib/i18n/context";
 import { EmptyState } from "@/components/EmptyState";
-import { formatPrice, formatDate, orderStatuses } from "@/lib/utils";
+import { formatPrice } from "@/lib/utils";
 import {
   Package,
   ChevronRight,
@@ -34,11 +34,7 @@ interface Order {
   id: string;
   orderNumber: string;
   total: number;
-  discount: number;
   status: string;
-  paymentMethod: string;
-  paymentStatus: string;
-  createdAt: string;
   items: OrderItem[];
 }
 
@@ -120,8 +116,7 @@ export default function OrdersPage() {
                     </span>
                   </div>
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-[var(--muted)]">
-                    <span>{formatDate(order.createdAt)}</span>
-                    <span>{t("account.orders.items", { count: itemCount })}</span>
+                    <span>{itemCount} items</span>
                     <span className="font-medium text-[var(--fg)]">
                       {formatPrice(order.total)}
                     </span>

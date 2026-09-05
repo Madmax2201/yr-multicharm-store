@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { getCurrentUser } from "@/lib/auth";
 import { useLanguage } from "@/lib/i18n/context";
 import { EmptyState } from "@/components/EmptyState";
 import { formatPrice } from "@/lib/utils";
@@ -45,18 +44,24 @@ export default function OrdersPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const user = getCurrentUser();
-    if (!user) {
-      router.push("/auth/login?redirect=/account/orders");
-      return;
-    }
-
-    fetch("/api/orders")
+    fetch("/api/auth/me", { cache: "no-store" })
       .then((r) => {
-        if (!r.ok) throw new Error("Unauthorized");
+        if (!r.ok) {
+          router.push("/auth/login?redirect=/account/orders");
+          return null;
+        }
         return r.json();
       })
+      .then((userData) => {
+        if (!userData) return;
+        return fetch("/api/orders")
+          .then((r) => {
+            if (!r.ok) throw new Error("Unauthorized");
+            return r.json();
+          });
+      })
       .then((data) => {
+        if (data === undefined || data === null) return;
         setOrders(Array.isArray(data) ? data : []);
         setLoading(false);
       })

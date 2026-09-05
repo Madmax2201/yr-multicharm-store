@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { getCurrentUser } from "@/lib/auth";
 import { useLanguage } from "@/lib/i18n/context";
 import { ProductCard } from "@/components/ProductCard";
 import { EmptyState } from "@/components/EmptyState";
@@ -15,32 +14,29 @@ export default function WishlistPage() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchWishlist = () => {
-    fetch("/api/wishlist")
+  useEffect(() => {
+    fetch("/api/auth/me", { cache: "no-store" })
       .then((r) => {
-        if (!r.ok) throw new Error("Unauthorized");
+        if (!r.ok) {
+          router.push("/auth/login?redirect=/account/wishlist");
+          return null;
+        }
         return r.json();
       })
+      .then((userData) => {
+        if (!userData) return;
+        return fetch("/api/wishlist")
+          .then((r) => {
+            if (!r.ok) throw new Error("Unauthorized");
+            return r.json();
+          });
+      })
       .then((data) => {
+        if (data === undefined || data === null) return;
         setItems(Array.isArray(data) ? data : []);
         setLoading(false);
       })
-      .catch(() => {
-        setLoading(false);
-        const user = getCurrentUser();
-        if (!user) {
-          router.push("/auth/login?redirect=/account/wishlist");
-        }
-      });
-  };
-
-  useEffect(() => {
-    const user = getCurrentUser();
-    if (!user) {
-      router.push("/auth/login?redirect=/account/wishlist");
-      return;
-    }
-    fetchWishlist();
+      .catch(() => setLoading(false));
   }, []);
 
   if (loading) {

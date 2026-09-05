@@ -3,7 +3,6 @@
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { getCurrentUser } from "@/lib/auth";
 import { useLanguage } from "@/lib/i18n/context";
 import { formatPrice } from "@/lib/utils";
 import {
@@ -58,18 +57,24 @@ export default function OrderDetailPage({
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const user = getCurrentUser();
-    if (!user) {
-      router.push(`/auth/login?redirect=/account/orders/${id}`);
-      return;
-    }
-
-    fetch(`/api/orders/${id}`)
+    fetch("/api/auth/me", { cache: "no-store" })
       .then((r) => {
-        if (!r.ok) throw new Error("Order not found");
+        if (!r.ok) {
+          router.push(`/auth/login?redirect=/account/orders/${id}`);
+          return null;
+        }
         return r.json();
       })
+      .then((userData) => {
+        if (!userData) return;
+        return fetch(`/api/orders/${id}`)
+          .then((r) => {
+            if (!r.ok) throw new Error("Order not found");
+            return r.json();
+          });
+      })
       .then((data) => {
+        if (data === undefined || data === null) return;
         setOrder(data);
         setLoading(false);
       })

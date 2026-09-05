@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { getCurrentUser } from "@/lib/auth";
 import { useLanguage } from "@/lib/i18n/context";
 import { formatPrice } from "@/lib/utils";
 import {
@@ -61,7 +59,6 @@ const statusIcons: Record<string, any> = {
 };
 
 export default function AccountPage() {
-  const router = useRouter();
   const { t } = useLanguage();
   const [user, setUser] = useState<any>(null);
   const [addresses, setAddresses] = useState<Address[]>([]);
@@ -82,27 +79,33 @@ export default function AccountPage() {
   const [addrError, setAddrError] = useState("");
 
   useEffect(() => {
-    const currentUser = getCurrentUser();
-    if (!currentUser) {
-      window.location.href = "/auth/login?redirect=/account";
-      return;
-    }
-    if (currentUser.role === "ADMIN") {
-      window.location.href = "/admin";
-      return;
-    }
-
-    Promise.all([
-      fetch("/api/auth/me", { cache: "no-store" }).then((r) => r.json()),
-      fetch("/api/addresses", { cache: "no-store" }).then((r) => r.json()),
-      fetch("/api/orders", { cache: "no-store" }).then((r) => r.json()),
-      fetch("/api/wishlist", { cache: "no-store" }).then((r) => r.json()),
-    ])
-      .then(([userData, addrData, ordersData, wishlistData]) => {
+    fetch("/api/auth/me", { cache: "no-store" })
+      .then((r) => {
+        if (!r.ok) {
+          window.location.href = "/auth/login?redirect=/account";
+          return null;
+        }
+        return r.json();
+      })
+      .then((userData) => {
+        if (!userData) return;
+        if (userData.role === "ADMIN") {
+          window.location.href = "/admin";
+          return;
+        }
         setUser(userData);
-        setAddresses(Array.isArray(addrData) ? addrData : []);
-        setOrders(Array.isArray(ordersData) ? ordersData : []);
-        setWishlistCount(Array.isArray(wishlistData) ? wishlistData.length : 0);
+
+        return Promise.all([
+          fetch("/api/addresses", { cache: "no-store" }).then((r) => r.ok ? r.json() : []),
+          fetch("/api/orders", { cache: "no-store" }).then((r) => r.ok ? r.json() : []),
+          fetch("/api/wishlist", { cache: "no-store" }).then((r) => r.ok ? r.json() : []),
+        ]);
+      })
+      .then((results) => {
+        if (!results) return;
+        setAddresses(Array.isArray(results[0]) ? results[0] : []);
+        setOrders(Array.isArray(results[1]) ? results[1] : []);
+        setWishlistCount(Array.isArray(results[2]) ? results[2].length : 0);
         setLoading(false);
       })
       .catch(() => setLoading(false));

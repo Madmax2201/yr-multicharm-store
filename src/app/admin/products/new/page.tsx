@@ -1,14 +1,10 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, Trash2, ChevronLeft, Upload, X, Image as ImageIcon } from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/context";
-
-const categories = [
-  "Face", "Eyes", "Lips", "Skincare", "Nails", "Tools", "Fragrance", "Bath & Body",
-];
 
 interface Variant {
   name: string;
@@ -42,6 +38,7 @@ export default function NewProduct() {
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [uploading, setUploading] = useState<number | null>(null);
+  const [categories, setCategories] = useState<{ name: string; slug: string }[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [form, setForm] = useState<FormData>({
     name: "",
@@ -64,6 +61,13 @@ export default function NewProduct() {
     setForm((prev) => ({ ...prev, [key]: value }));
     setErrors((prev) => ({ ...prev, [key]: undefined }));
   };
+
+  useEffect(() => {
+    fetch("/api/categories")
+      .then((r) => r.json())
+      .then((data) => setCategories(Array.isArray(data) ? data : []))
+      .catch(() => {});
+  }, []);
 
   const addImage = () => {
     setForm((prev) => ({ ...prev, images: [...prev.images, ""] }));
@@ -266,7 +270,7 @@ export default function NewProduct() {
               >
                 <option value="">{t("admin.productForm.selectCategory")}</option>
                 {categories.map((cat) => (
-                  <option key={cat} value={cat}>{cat}</option>
+                  <option key={cat.slug} value={cat.slug}>{cat.name}</option>
                 ))}
               </select>
               {errors.category && (

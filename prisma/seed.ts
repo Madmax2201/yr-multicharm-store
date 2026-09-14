@@ -8,8 +8,27 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   console.log("Seeding database...");
 
-  const adminPassword = await bcrypt.hash("admin123", 12);
-  const userPassword = await bcrypt.hash("user123", 12);
+  const categories = [
+    { name: "IPL Hair Removal", slug: "ipl-hair-removal" },
+    { name: "Beauty Devices", slug: "beauty-devices" },
+    { name: "Accessories", slug: "accessories" },
+  ];
+
+  for (const cat of categories) {
+    await prisma.category.upsert({
+      where: { slug: cat.slug },
+      update: {},
+      create: cat,
+    });
+  }
+  console.log(`Seeded ${categories.length} categories`);
+
+  const existingProducts = await prisma.product.count();
+  if (existingProducts > 0) {
+    console.log(`${existingProducts} products already exist, skipping product seed`);
+  } else {
+    const adminPassword = await bcrypt.hash("admin123", 12);
+    const userPassword = await bcrypt.hash("user123", 12);
 
   const admin = await prisma.user.upsert({
     where: { email: "admin@glowandbeauty.com" },
@@ -341,6 +360,7 @@ async function main() {
 
   console.log("Reviews created");
   console.log("Seeding complete!");
+  }
 }
 
 main()

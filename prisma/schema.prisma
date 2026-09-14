@@ -6,6 +6,14 @@ datasource db {
   provider = "postgresql"
 }
 
+model Category {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  icon      String?
+  createdAt DateTime @default(now())
+}
+
 model User {
   id        String   @id @default(cuid())
   name      String

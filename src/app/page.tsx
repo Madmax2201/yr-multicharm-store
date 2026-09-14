@@ -88,10 +88,10 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden bg-gradient-to-br from-purple-500 via-violet-500 to-fuchsia-600">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
           style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/80 via-violet-500/70 to-fuchsia-600/80" />
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/40 via-violet-500/30 to-fuchsia-600/40" />
         <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
           <h1 className="mb-6 font-serif text-5xl font-bold leading-tight text-white md:text-7xl">
             {t("home.hero.title1")}

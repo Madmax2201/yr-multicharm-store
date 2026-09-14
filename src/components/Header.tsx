@@ -21,7 +21,6 @@ import { SearchBar } from "./SearchBar";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { Dropdown } from "./ui/dropdown";
-import { categories } from "@/lib/utils";
 
 const navLinks = [
   { labelKey: "nav.home", href: "/" },

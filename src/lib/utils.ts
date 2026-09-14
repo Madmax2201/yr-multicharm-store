@@ -43,17 +43,6 @@ export function formatDate(date: Date | string): string {
   });
 }
 
-export const categories = [
-  { name: "Face", slug: "face" },
-  { name: "Eyes", slug: "eyes" },
-  { name: "Lips", slug: "lips" },
-  { name: "Skincare", slug: "skincare" },
-  { name: "Nails", slug: "nails" },
-  { name: "Tools & Brushes", slug: "tools" },
-  { name: "Fragrance", slug: "fragrance" },
-  { name: "Bath & Body", slug: "bath-body" },
-];
-
 export const orderStatuses = [
   "PENDING",
   "CONFIRMED",

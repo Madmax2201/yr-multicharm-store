@@ -7,7 +7,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { StarRating } from "@/components/StarRating";
 import { useApp } from "@/components/AppProvider";
 import { addToCart, type CartItem } from "@/lib/cart";
-import { formatPrice, getImageUrl, formatDate, categories } from "@/lib/utils";
+import { formatPrice, getImageUrl, formatDate } from "@/lib/utils";
 import { useLanguage } from "@/lib/i18n/context";
 import {
   Heart,

@@ -5,7 +5,7 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { ProductCard } from "@/components/ProductCard";
 import { EmptyState } from "@/components/EmptyState";
-import { categories, formatPrice } from "@/lib/utils";
+import { formatPrice } from "@/lib/utils";
 import { useLanguage } from "@/lib/i18n/context";
 import {
   SlidersHorizontal,
@@ -16,15 +16,6 @@ import {
   Search,
   PackageOpen,
 } from "lucide-react";
-
-const BRANDS = [
-  "Glow Labs",
-  "Luxe Beauty",
-  "Rose Petal",
-  "Velvet Touch",
-  "Pure Radiance",
-  "Gold Dust",
-];
 
 function ProductsContent() {
   const { t } = useLanguage();
@@ -40,6 +31,7 @@ function ProductsContent() {
   ];
 
   const [products, setProducts] = useState<any[]>([]);
+  const [categories, setCategories] = useState<{ name: string; slug: string }[]>([]);
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -70,6 +62,13 @@ function ProductsContent() {
     },
     [searchParams, router, pathname]
   );
+
+  useEffect(() => {
+    fetch("/api/categories")
+      .then((r) => r.json())
+      .then((data) => setCategories(Array.isArray(data) ? data : []))
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -104,12 +103,6 @@ function ProductsContent() {
     activeFilters.push({
       label: cat?.name || currentParams.category,
       onRemove: () => updateParams({ category: "" }),
-    });
-  }
-  if (currentParams.brand) {
-    activeFilters.push({
-      label: currentParams.brand,
-      onRemove: () => updateParams({ brand: "" }),
     });
   }
   if (currentParams.minPrice || currentParams.maxPrice) {
@@ -166,30 +159,6 @@ function ProductsContent() {
             onChange={(e) => updateParams({ maxPrice: e.target.value })}
             className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--fg)] outline-none focus:border-primary"
           />
-        </div>
-      </div>
-
-      {/* Brand */}
-      <div>
-        <h4 className="mb-3 text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">
-          {t("products.brand")}
-        </h4>
-        <div className="space-y-2">
-          {BRANDS.map((brand) => (
-            <label key={brand} className="flex cursor-pointer items-center gap-2.5 text-sm text-[var(--fg)]">
-              <input
-                type="checkbox"
-                checked={currentParams.brand === brand}
-                onChange={() =>
-                  updateParams({
-                    brand: currentParams.brand === brand ? "" : brand,
-                  })
-                }
-                className="h-4 w-4 rounded border-[var(--border)] text-primary accent-primary"
-              />
-              {brand}
-            </label>
-          ))}
         </div>
       </div>
     </div>

@@ -8,7 +8,6 @@ interface Category {
   name: string;
   slug: string;
   icon?: string;
-  _count?: { products: number };
 }
 
 export default function AdminCategoriesPage() {
@@ -116,7 +115,7 @@ export default function AdminCategoriesPage() {
               </div>
               <div>
                 <p className="font-medium text-purple-900">{cat.name}</p>
-                <p className="text-xs text-purple-500">/{cat.slug} • {cat._count?.products ?? 0} products</p>
+                <p className="text-xs text-purple-500">/{cat.slug}</p>
               </div>
             </div>
             <button

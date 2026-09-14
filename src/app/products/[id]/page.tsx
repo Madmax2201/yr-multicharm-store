@@ -183,6 +183,7 @@ export default function ProductDetailPage({
   const [wishlisted, setWishlisted] = useState(false);
   const [wishlistLoading, setWishlistLoading] = useState(false);
   const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
+  const [categories, setCategories] = useState<{ name: string; slug: string }[]>([]);
 
   const fetchProduct = () => {
     fetch(`/api/products/${id}`, { cache: "no-store" })
@@ -210,6 +211,10 @@ export default function ProductDetailPage({
 
   useEffect(() => {
     fetchProduct();
+    fetch("/api/categories")
+      .then((r) => r.json())
+      .then((data) => setCategories(Array.isArray(data) ? data : []))
+      .catch(() => {});
   }, [id]);
 
   const images = product ? getImageUrl(product.images) : [];

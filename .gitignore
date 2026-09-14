@@ -22,6 +22,8 @@
 .DS_Store
 *.pem
 *.exe
+*.docx
+*.crdownload
 
 # debug
 npm-debug.log*

@@ -54,32 +54,6 @@ function FeaturedProducts() {
   );
 }
 
-function CategoryCard({
-  name,
-  slug,
-  gradient,
-  icon: Icon,
-}: {
-  name: string;
-  slug: string;
-  gradient: string;
-  icon: any;
-}) {
-  const { t } = useLanguage();
-  return (
-    <Link
-      href={`/products?category=${slug}`}
-      className={`group relative flex flex-col items-center justify-center rounded-2xl p-8 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${gradient}`}
-    >
-      <Icon size={40} className="mb-4 opacity-80 transition-transform group-hover:scale-110" />
-      <span className="font-serif text-lg font-semibold">{name}</span>
-      <span className="mt-2 flex items-center gap-1 text-sm font-medium opacity-0 transition-all group-hover:opacity-80">
-        {t("home.categories.shopNow")} <ChevronRight size={14} />
-      </span>
-    </Link>
-  );
-}
-
 export default function HomePage() {
   const { t } = useLanguage();
 
@@ -146,58 +120,6 @@ export default function HomePage() {
           >
             {t("products.viewAll")} <ChevronRight size={16} />
           </Link>
-        </div>
-      </section>
-
-      {/* Category Showcase */}
-      <section className="bg-[var(--muted-bg)] py-20">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="mb-10 text-center">
-            <span className="mb-2 inline-block text-sm font-semibold uppercase tracking-widest text-primary">
-              {t("home.categories.title")}
-            </span>
-            <h2 className="font-serif text-3xl font-bold text-[var(--fg)] md:text-4xl">
-              {t("home.categories.title")}
-            </h2>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <CategoryCard
-              name={t("category.face")}
-              slug="face"
-              gradient="bg-gradient-to-br from-violet-400 to-purple-500"
-              icon={Sparkles}
-            />
-            <CategoryCard
-              name={t("category.eyes")}
-              slug="eyes"
-              gradient="bg-gradient-to-br from-purple-500 to-fuchsia-600"
-              icon={Sparkles}
-            />
-            <CategoryCard
-              name={t("category.lips")}
-              slug="lips"
-              gradient="bg-gradient-to-br from-fuchsia-400 to-pink-500"
-              icon={Sparkles}
-            />
-            <CategoryCard
-              name={t("category.skincare")}
-              slug="skincare"
-              gradient="bg-gradient-to-br from-teal-400 to-emerald-500"
-              icon={Sparkles}
-            />
-            <CategoryCard
-              name={t("category.nails")}
-              slug="nails"
-              gradient="bg-gradient-to-br from-pink-400 to-fuchsia-500"
-              icon={Sparkles}
-            />
-            <CategoryCard
-              name={t("category.fragrance")}
-              slug="fragrance"
-              gradient="bg-gradient-to-br from-amber-400 to-orange-500"
-              icon={Sparkles}
-            />
-          </div>
         </div>
       </section>
 

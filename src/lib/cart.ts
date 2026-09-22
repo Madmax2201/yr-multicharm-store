@@ -1,3 +1,5 @@
+import { trackEvent } from "./pixel";
+
 export interface CartItem {
   id: string;
   productId: string;
@@ -38,6 +40,16 @@ export function addToCart(item: CartItem): CartItem[] {
     cart.push(item);
   }
   saveCart(cart);
+  trackEvent("AddToCart", {
+    content_ids: [item.productId],
+    content_name: item.name,
+    content_type: "product",
+    contents: [
+      { id: item.productId, quantity: item.quantity, item_price: item.price },
+    ],
+    value: item.price * item.quantity,
+    currency: "DZD",
+  });
   return cart;
 }
 

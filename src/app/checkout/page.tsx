@@ -7,6 +7,7 @@ import { useApp } from "@/components/AppProvider";
 import { useLanguage } from "@/lib/i18n/context";
 import { getCart, getCartTotal, clearCart, type CartItem } from "@/lib/cart";
 import { formatPrice } from "@/lib/utils";
+import { trackEvent } from "@/lib/pixel";
 import {
   ShoppingBag,
   CreditCard,
@@ -48,6 +49,17 @@ export default function CheckoutPage() {
       return;
     }
     setCart(items);
+    trackEvent("InitiateCheckout", {
+      content_ids: items.map((i) => i.productId),
+      contents: items.map((i) => ({
+        id: i.productId,
+        quantity: i.quantity,
+        item_price: i.price,
+      })),
+      value: getCartTotal(items),
+      currency: "DZD",
+      num_items: items.reduce((sum, i) => sum + i.quantity, 0),
+    });
   }, [router]);
 
   const applyCoupon = async () => {
@@ -117,6 +129,17 @@ export default function CheckoutPage() {
       clearCart();
       refreshCart();
       window.dispatchEvent(new Event("cartUpdated"));
+      trackEvent("Purchase", {
+        content_ids: cart.map((i) => i.productId),
+        contents: cart.map((i) => ({
+          id: i.productId,
+          quantity: i.quantity,
+          item_price: i.price,
+        })),
+        value: total,
+        currency: "DZD",
+        num_items: cart.reduce((sum, i) => sum + i.quantity, 0),
+      });
       router.push(`/checkout/success?order=${data.id}`);
     } catch (err: any) {
       setError(err.message);

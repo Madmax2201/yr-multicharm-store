@@ -92,12 +92,12 @@ export default function HomePage() {
           style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
         />
         <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
-          <h1 className="mb-6 font-serif text-5xl font-bold leading-tight text-white md:text-7xl">
+          <h1 className="mb-6 font-serif text-5xl font-bold leading-tight text-purple-200 md:text-7xl">
             {t("home.hero.title1")}
             <br />
-            <span className="text-pink-200">{t("home.hero.title2")}</span>
+            <span className="text-purple-100">{t("home.hero.title2")}</span>
           </h1>
-          <p className="mx-auto mb-10 max-w-xl text-lg text-white/80 md:text-xl">
+          <p className="mx-auto mb-10 max-w-xl text-lg text-purple-200/90 md:text-xl">
             {t("home.hero.subtitle")}
           </p>
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">

@@ -20,7 +20,7 @@ function FeaturedProducts() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/products/featured", { cache: "no-store" })
+    fetch("/api/products/featured")
       .then((r) => r.json())
       .then((data) => {
         setProducts(Array.isArray(data) ? data : []);

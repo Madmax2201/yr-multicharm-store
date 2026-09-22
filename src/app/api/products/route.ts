@@ -34,24 +34,33 @@ export async function GET(request: NextRequest) {
   if (sort === "price-desc") orderBy = { price: "desc" };
   if (sort === "name") orderBy = { name: "asc" };
 
-  const [products, total] = await Promise.all([
+  const [products, total, reviewAggs] = await Promise.all([
     (prisma.product.findMany as any)({
       where,
       orderBy,
       skip: (page - 1) * limit,
       take: limit,
-      include: { variants: true, reviews: true },
+      include: {
+        variants: true,
+        _count: { select: { reviews: true } },
+      },
     }),
     (prisma.product.count as any)({ where }),
+    prisma.review.groupBy({
+      by: ["productId"],
+      _avg: { rating: true },
+    }),
   ]);
 
-  const productsWithRating = (products as any[]).map((p: any) => {
-    const avgRating =
-      p.reviews?.length > 0
-        ? p.reviews.reduce((sum: number, r: any) => sum + r.rating, 0) / p.reviews.length
-        : null;
-    return { ...p, avgRating, reviewCount: p.reviews?.length || 0 };
-  });
+  const ratingMap = new Map(
+    reviewAggs.map((r: any) => [r.productId, r._avg.rating])
+  );
+
+  const productsWithRating = (products as any[]).map((p: any) => ({
+    ...p,
+    avgRating: ratingMap.get(p.id) ?? null,
+    reviewCount: p._count?.reviews || 0,
+  }));
 
   return NextResponse.json({
     products: productsWithRating,
@@ -59,6 +68,6 @@ export async function GET(request: NextRequest) {
     page,
     totalPages: Math.ceil(total / limit),
   }, {
-    headers: { "Cache-Control": "no-store, max-age=0" },
+    headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120" },
   });
 }

@@ -186,7 +186,7 @@ export default function ProductDetailPage({
   const [categories, setCategories] = useState<{ name: string; slug: string }[]>([]);
 
   const fetchProduct = () => {
-    fetch(`/api/products/${id}`, { cache: "no-store" })
+    fetch(`/api/products/${id}`)
       .then((r) => r.json())
       .then((data) => {
         setProduct(data);

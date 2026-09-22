@@ -6,7 +6,9 @@ export async function GET() {
   const categories = await prisma.category.findMany({
     orderBy: { name: "asc" },
   });
-  return NextResponse.json(categories);
+  return NextResponse.json(categories, {
+    headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=600" },
+  });
 }
 
 export async function POST(request: NextRequest) {

@@ -82,7 +82,7 @@ function ProductsContent() {
     if (currentParams.brand) params.set("brand", currentParams.brand);
     params.set("limit", "12");
 
-    fetch(`/api/products?${params.toString()}`, { cache: "no-store" })
+    fetch(`/api/products?${params.toString()}`)
       .then((r) => r.json())
       .then((data) => {
         setProducts(data.products || []);

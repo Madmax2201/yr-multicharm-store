@@ -2,21 +2,32 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 
 export async function GET() {
-  const products = await (prisma.product.findMany as any)({
-    where: { isActive: true, featured: true },
-    take: 8,
-    include: { reviews: true, variants: true },
-  });
+  const [products, reviewAggs] = await Promise.all([
+    (prisma.product.findMany as any)({
+      where: { isActive: true, featured: true },
+      take: 8,
+      include: {
+        variants: true,
+        _count: { select: { reviews: true } },
+      },
+    }),
+    prisma.review.groupBy({
+      by: ["productId"],
+      _avg: { rating: true },
+    }),
+  ]);
 
-  const productsWithRating = (products as any[]).map((p: any) => {
-    const avgRating =
-      p.reviews?.length > 0
-        ? p.reviews.reduce((sum: number, r: any) => sum + r.rating, 0) / p.reviews.length
-        : null;
-    return { ...p, avgRating, reviewCount: p.reviews?.length || 0 };
-  });
+  const ratingMap = new Map(
+    reviewAggs.map((r: any) => [r.productId, r._avg.rating])
+  );
+
+  const productsWithRating = (products as any[]).map((p: any) => ({
+    ...p,
+    avgRating: ratingMap.get(p.id) ?? null,
+    reviewCount: p._count?.reviews || 0,
+  }));
 
   return NextResponse.json(productsWithRating, {
-    headers: { "Cache-Control": "no-store, max-age=0" },
+    headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120" },
   });
 }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Image as ImageIcon, Upload, Loader2, AlertCircle, RotateCcw, ExternalLink } from "lucide-react";
+import { uploadImage } from "@/lib/imageUpload";
 
 const DEFAULT_HERO = "/images/hero-bg.jpg";
 
@@ -31,13 +32,8 @@ export default function AdminSettingsPage() {
     setError("");
 
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Upload failed");
-      setHeroImage(data.url);
+      const url = await uploadImage(file, { maxDimension: 1920, quality: 0.85 });
+      setHeroImage(url);
     } catch (err: any) {
       setError(err.message);
     } finally {

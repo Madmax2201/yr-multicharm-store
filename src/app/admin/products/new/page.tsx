@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Plus, Trash2, ChevronLeft, Upload, X, Image as ImageIcon } from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/context";
+import { uploadImage } from "@/lib/imageUpload";
 
 interface Variant {
   name: string;
@@ -90,14 +91,10 @@ export default function NewProduct() {
   const handleFileUpload = async (idx: number, file: File) => {
     setUploading(idx);
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
-      if (!res.ok) throw new Error("Upload failed");
-      const data = await res.json();
-      updateImage(idx, data.url);
-    } catch {
-      alert("Failed to upload image");
+      const url = await uploadImage(file);
+      updateImage(idx, url);
+    } catch (err: any) {
+      alert(err.message || "Failed to upload image");
     } finally {
       setUploading(null);
     }

@@ -21,7 +21,7 @@ const en: Record<string, string> = {
   "home.promises.freeShipping": "Free Shipping",
   "home.promises.freeShippingDesc": "Free standard shipping on all orders for more than 2 products. Fast and reliable delivery right to your door.",
   "home.promises.easyReturns": "Easy Returns",
-  "home.promises.easyReturnsDesc": "Not in love? Return any item within 30 days for a full refund. No questions asked.",
+  "home.promises.easyReturnsDesc": "Not in love? Return any item within 24 hours for a full refund.",
   "home.promises.secureCheckout": "Secure Checkout",
   "home.promises.secureCheckoutDesc": "Your payment information is always protected with industry-standard encryption.",
   "home.newsletter.title": "Get the Glow Insider",

@@ -21,7 +21,7 @@ const ar: Record<string, string> = {
   "home.promises.freeShipping": "شحن مجاني",
   "home.promises.freeShippingDesc": "شحن مجاني للطلبات التي تحتوي على أكثر من منتجين. توصيل سريع وموثوق إلى باب منزلك.",
   "home.promises.easyReturns": "إرجاع سهل",
-  "home.promises.easyReturnsDesc": "غير راضية؟ يمكنك إرجاع أي منتج خلال 30 يوماً لاسترداد كامل المبلغ. بدون طرح أسئلة.",
+  "home.promises.easyReturnsDesc": "غير راضية؟ يمكنك إرجاع أي منتج خلال 24 ساعة لاسترداد كامل المبلغ.",
   "home.promises.secureCheckout": "دفع آمن",
   "home.promises.secureCheckoutDesc": "معلومات الدفع الخاصة بك محمية دائماً بتشفير عالي المستوى.",
   "home.newsletter.title": "اشتركي في النشرة البريدية",

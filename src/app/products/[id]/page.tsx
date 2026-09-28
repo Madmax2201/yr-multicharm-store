@@ -185,6 +185,7 @@ export default function ProductDetailPage({
   const [wishlistLoading, setWishlistLoading] = useState(false);
   const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
   const [categories, setCategories] = useState<{ name: string; slug: string }[]>([]);
+  const [brands, setBrands] = useState<{ name: string; slug: string }[]>([]);
 
   const fetchProduct = () => {
     fetch(`/api/products/${id}`)
@@ -215,6 +216,10 @@ export default function ProductDetailPage({
     fetch("/api/categories")
       .then((r) => r.json())
       .then((data) => setCategories(Array.isArray(data) ? data : []))
+      .catch(() => {});
+    fetch("/api/brands")
+      .then((r) => r.json())
+      .then((data) => setBrands(Array.isArray(data) ? data : []))
       .catch(() => {});
   }, [id]);
 
@@ -364,7 +369,11 @@ export default function ProductDetailPage({
               {product.name}
             </h1>
             {product.brand && (
-              <p className="mt-1 text-sm text-[var(--muted)]">{t("product.by", { brand: product.brand })}</p>
+              <p className="mt-1 text-sm text-[var(--muted)]">
+                {t("product.by", {
+                  brand: brands.find((b) => b.slug === product.brand)?.name || product.brand,
+                })}
+              </p>
             )}
           </div>
 

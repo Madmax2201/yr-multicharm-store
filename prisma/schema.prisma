@@ -149,6 +149,13 @@ model Coupon {
   products CouponProduct[]
 }
 
+model Brand {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+}
+
 model SiteSetting {
   key       String   @id
   value     String

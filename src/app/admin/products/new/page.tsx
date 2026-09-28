@@ -40,6 +40,7 @@ export default function NewProduct() {
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [uploading, setUploading] = useState<number | null>(null);
   const [categories, setCategories] = useState<{ name: string; slug: string }[]>([]);
+  const [brands, setBrands] = useState<{ name: string; slug: string }[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [form, setForm] = useState<FormData>({
     name: "",
@@ -67,6 +68,10 @@ export default function NewProduct() {
     fetch("/api/categories")
       .then((r) => r.json())
       .then((data) => setCategories(Array.isArray(data) ? data : []))
+      .catch(() => {});
+    fetch("/api/brands")
+      .then((r) => r.json())
+      .then((data) => setBrands(Array.isArray(data) ? data : []))
       .catch(() => {});
   }, []);
 
@@ -291,12 +296,18 @@ export default function NewProduct() {
               <label className="mb-1 block text-sm font-medium text-purple-700">
                 {t("admin.productForm.brand")}
               </label>
-              <input
-                type="text"
+              <select
                 value={form.brand}
                 onChange={(e) => update("brand", e.target.value)}
                 className="w-full rounded-lg border border-purple-200 bg-white px-3 py-2 text-sm text-purple-900 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
-              />
+              >
+                <option value="">{t("admin.productForm.noBrand")}</option>
+                {brands.map((b) => (
+                  <option key={b.slug} value={b.slug}>
+                    {b.name}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div>

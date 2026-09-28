@@ -32,6 +32,7 @@ function ProductsContent() {
 
   const [products, setProducts] = useState<any[]>([]);
   const [categories, setCategories] = useState<{ name: string; slug: string }[]>([]);
+  const [brands, setBrands] = useState<{ name: string; slug: string }[]>([]);
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -64,9 +65,14 @@ function ProductsContent() {
   );
 
   useEffect(() => {
-    fetch("/api/categories")
-      .then((r) => r.json())
-      .then((data) => setCategories(Array.isArray(data) ? data : []))
+    Promise.all([
+      fetch("/api/categories").then((r) => r.json()),
+      fetch("/api/brands").then((r) => r.json()),
+    ])
+      .then(([cats, brs]) => {
+        setCategories(Array.isArray(cats) ? cats : []);
+        setBrands(Array.isArray(brs) ? brs : []);
+      })
       .catch(() => {});
   }, []);
 
@@ -105,6 +111,13 @@ function ProductsContent() {
       onRemove: () => updateParams({ category: "" }),
     });
   }
+  if (currentParams.brand) {
+    const br = brands.find((b) => b.slug === currentParams.brand);
+    activeFilters.push({
+      label: br?.name || currentParams.brand,
+      onRemove: () => updateParams({ brand: "" }),
+    });
+  }
   if (currentParams.minPrice || currentParams.maxPrice) {
     activeFilters.push({
       label: `${currentParams.minPrice || "0"} DA - ${currentParams.maxPrice || "∞"} DA`,
@@ -133,6 +146,30 @@ function ProductsContent() {
                 className="h-4 w-4 rounded border-[var(--border)] text-primary accent-primary"
               />
               {cat.name}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Brands */}
+      <div>
+        <h4 className="mb-3 text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">
+          {t("products.brand")}
+        </h4>
+        <div className="space-y-2">
+          {brands.map((b) => (
+            <label key={b.slug} className="flex cursor-pointer items-center gap-2.5 text-sm text-[var(--fg)]">
+              <input
+                type="checkbox"
+                checked={currentParams.brand === b.slug}
+                onChange={() =>
+                  updateParams({
+                    brand: currentParams.brand === b.slug ? "" : b.slug,
+                  })
+                }
+                className="h-4 w-4 rounded border-[var(--border)] text-primary accent-primary"
+              />
+              {b.name}
             </label>
           ))}
         </div>

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { put } from "@vercel/blob";
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,12 +12,18 @@ export async function POST(request: NextRequest) {
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const base64 = buffer.toString("base64");
     const mimeType = file.type || "image/jpeg";
-    const dataUrl = `data:${mimeType};base64,${base64}`;
+    const ext = mimeType.split("/")[1]?.replace("+xml", "") || "jpg";
+    const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
 
-    return NextResponse.json({ url: dataUrl });
+    const blob = await put(`products/${filename}`, buffer, {
+      access: "public",
+      contentType: mimeType,
+    });
+
+    return NextResponse.json({ url: blob.url });
   } catch (error) {
+    console.error("Upload failed:", error);
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
 }

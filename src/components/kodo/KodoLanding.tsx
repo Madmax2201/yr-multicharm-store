@@ -37,14 +37,16 @@ export function KodoLanding({
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${image})`, opacity: 0.18 }}
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(120% 90% at 80% 0%, var(--primary-light, #f3e8ff) 0%, transparent 60%), radial-gradient(90% 70% at 0% 100%, var(--muted-bg, #f6f4f8) 0%, transparent 55%)",
+          }}
           aria-hidden
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)]/70 via-[var(--bg)]/85 to-[var(--bg)]" />
 
-        <div className="relative mx-auto max-w-6xl px-4 py-16 md:py-24">
-          <div className="grid items-center gap-12 md:grid-cols-2">
+        <div className="relative mx-auto max-w-6xl px-4 py-14 md:py-20">
+          <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-14">
             <div>
               <span className="inline-flex items-center gap-2 rounded-full bg-primary-light px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
                 <Sparkles size={14} />
@@ -55,7 +57,7 @@ export function KodoLanding({
                 {t("kodo.title")}
               </h1>
 
-              <p className="mt-4 text-lg leading-relaxed text-[var(--muted)]">
+              <p className="mt-4 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
                 {t("kodo.subtitle")}
               </p>
 
@@ -87,9 +89,17 @@ export function KodoLanding({
               </div>
             </div>
 
-            <div className="flex justify-center">
-              <div className="relative w-full max-w-md overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--card)] shadow-2xl">
-                <img src={image} alt={name} className="h-full w-full object-cover" />
+            {/* The source artwork is a 9:16 portrait, so the frame matches it
+                exactly and object-cover never crops the product. */}
+            <div className="flex justify-center lg:justify-end">
+              <div className="w-full max-w-[300px] overflow-hidden rounded-[2rem] border border-[var(--border)] bg-[var(--card)] shadow-2xl sm:max-w-[340px]">
+                <img
+                  src={image}
+                  alt={name}
+                  width={900}
+                  height={1600}
+                  className="aspect-[9/16] h-auto w-full object-cover"
+                />
               </div>
             </div>
           </div>

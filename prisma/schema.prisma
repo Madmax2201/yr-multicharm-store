@@ -149,6 +149,12 @@ model Coupon {
   products CouponProduct[]
 }
 
+model SiteSetting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
 model CouponProduct {
   couponId  String
   productId String

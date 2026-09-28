@@ -7,7 +7,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { StarRating } from "@/components/StarRating";
 import { useApp } from "@/components/AppProvider";
 import { addToCart, type CartItem } from "@/lib/cart";
-import { formatPrice, getImageUrl, formatDate } from "@/lib/utils";
+import { formatPrice, getImageUrl, formatDate, getPromotion } from "@/lib/utils";
 import { useLanguage } from "@/lib/i18n/context";
 import {
   Heart,
@@ -20,6 +20,7 @@ import {
   Check,
   AlertCircle,
   PackageOpen,
+  Sparkles,
 } from "lucide-react";
 
 function ReviewForm({
@@ -222,10 +223,6 @@ export default function ProductDetailPage({
   const currentPrice = activeVariant?.price ?? product?.price ?? 0;
   const currentStock = activeVariant?.stock ?? product?.stock ?? 0;
   const outOfStock = currentStock === 0;
-  const hasDiscount = product?.compareAtPrice && product?.compareAtPrice > currentPrice;
-  const discountPercent = hasDiscount
-    ? Math.round(((product.compareAtPrice - currentPrice) / product.compareAtPrice) * 100)
-    : 0;
   const reviewCount = product?.reviewCount || product?.reviews?.length || 0;
 
   const handleAddToCart = () => {
@@ -385,21 +382,34 @@ export default function ProductDetailPage({
           )}
 
           {/* Price */}
-          <div className="flex items-center gap-3">
-            <span className="font-serif text-3xl font-bold text-[var(--fg)]">
-              {formatPrice(currentPrice)}
-            </span>
-            {hasDiscount && (
-              <>
-                <span className="text-lg text-[var(--muted)] line-through">
-                  {formatPrice(product.compareAtPrice)}
-                </span>
-                <span className="rounded-full bg-accent/10 px-3 py-0.5 text-xs font-semibold text-accent">
-                  -{discountPercent}%
-                </span>
-              </>
-            )}
-          </div>
+          {(() => {
+            const promo = getPromotion(currentPrice, product.comparePrice);
+            return (
+              <div className="space-y-2">
+                {promo && (
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-red-600 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-sm">
+                    <Sparkles size={12} />
+                    {t("product.promoBadge")} {"-"}
+                    {promo.percentOff}%
+                  </span>
+                )}
+                <div className="flex flex-wrap items-center gap-3">
+                  <span
+                    className={`font-serif font-bold text-[var(--fg)] ${
+                      promo ? "text-3xl text-red-600" : "text-3xl"
+                    }`}
+                  >
+                    {formatPrice(currentPrice)}
+                  </span>
+                  {promo && (
+                    <span className="text-lg font-medium text-red-500 line-through decoration-2">
+                      {formatPrice(promo.oldPrice)}
+                    </span>
+                  )}
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Description */}
           {product.description && (

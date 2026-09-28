@@ -79,6 +79,7 @@ const en: Record<string, string> = {
   "product.browseProducts": "Browse Products",
   "product.outOfStockBadge": "Out of Stock",
   "product.lowStockBadge": "Low stock",
+  "product.promoBadge": "Sale",
 
   "cart.empty": "Your cart is empty",
   "cart.emptyDesc": "Looks like you haven't added anything yet. Start shopping and find your perfect products!",

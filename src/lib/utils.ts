@@ -9,6 +9,14 @@ export function formatPrice(price: number): string {
   return `${price.toFixed(2)} DA`;
 }
 
+export function getPromotion(price: number, comparePrice?: number | null) {
+  if (!comparePrice || comparePrice <= price) return null;
+  return {
+    oldPrice: comparePrice,
+    percentOff: Math.round(((comparePrice - price) / comparePrice) * 100),
+  };
+}
+
 export function classNames(...classes: (string | boolean | undefined | null)[]): string {
   return classes.filter(Boolean).join(" ");
 }

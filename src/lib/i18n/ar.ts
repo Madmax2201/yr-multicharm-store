@@ -79,6 +79,7 @@ const ar: Record<string, string> = {
   "product.browseProducts": "تصفح المنتجات",
   "product.outOfStockBadge": "غير متوفر",
   "product.lowStockBadge": "مخزون محدود",
+  "product.promoBadge": "تخفيض",
 
   "cart.empty": "سلة التسوق فارغة",
   "cart.emptyDesc": "يبدو أنك لم تضفي أي شيء بعد. ابدئي التسوق واعثري على منتجاتك المثالية!",

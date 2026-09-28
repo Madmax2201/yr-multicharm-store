@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Heart, ShoppingBag, Eye } from "lucide-react";
 import { StarRating } from "./StarRating";
 import { addToCart, type CartItem } from "@/lib/cart";
-import { formatPrice, getImageUrl, truncate } from "@/lib/utils";
+import { formatPrice, getImageUrl, truncate, getPromotion } from "@/lib/utils";
 import { useApp } from "./AppProvider";
 import { useLanguage } from "@/lib/i18n/context";
 
@@ -34,7 +34,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const images = getImageUrl(product.images);
   const outOfStock = product.stock === 0;
   const lowStock = product.stock !== undefined && product.stock > 0 && product.stock < 10;
-  const hasDiscount = product.compareAtPrice && product.compareAtPrice > product.price;
+  const promo = getPromotion(product.price, (product as any).comparePrice);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -145,13 +145,20 @@ export function ProductCard({ product }: ProductCardProps) {
         )}
 
         {/* Price */}
-        <div className="mt-auto flex items-center gap-2">
-          <span className="font-serif text-lg font-bold text-[var(--fg)]">
-            {formatPrice(product.price)}
-          </span>
-          {hasDiscount && (
-            <span className="text-sm text-[var(--muted)] line-through">
-              {formatPrice(product.compareAtPrice!)}
+        <div className="mt-auto space-y-0.5">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-serif text-lg font-bold text-[var(--fg)]">
+              {formatPrice(product.price)}
+            </span>
+            {promo && (
+              <span className="text-sm font-medium text-red-500 line-through decoration-2">
+                {formatPrice(promo.oldPrice)}
+              </span>
+            )}
+          </div>
+          {promo && (
+            <span className="inline-flex items-center rounded-full bg-red-600 px-2 py-0.5 text-[10px] font-bold uppercase text-white">
+              {t("product.promoBadge")} -{promo.percentOff}%
             </span>
           )}
         </div>

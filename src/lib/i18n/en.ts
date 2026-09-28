@@ -23,7 +23,7 @@ const en: Record<string, string> = {
   "home.promises.easyReturns": "Easy Returns",
   "home.promises.easyReturnsDesc": "Not in love? Return any item within 24 hours for a full refund.",
   "home.promises.secureCheckout": "Secure Checkout",
-  "home.promises.secureCheckoutDesc": "Your payment information is always protected with industry-standard encryption.",
+  "home.promises.secureCheckoutDesc": "Pay cash on delivery. Hand your payment directly to the courier when your order arrives.",
   "home.newsletter.title": "Get the Glow Insider",
   "home.newsletter.subtitle": "Subscribe for exclusive deals, new arrivals, and beauty tips delivered to your inbox.",
   "home.newsletter.placeholder": "Enter your email",

@@ -23,7 +23,7 @@ const ar: Record<string, string> = {
   "home.promises.easyReturns": "إرجاع سهل",
   "home.promises.easyReturnsDesc": "غير راضية؟ يمكنك إرجاع أي منتج خلال 24 ساعة لاسترداد كامل المبلغ.",
   "home.promises.secureCheckout": "دفع آمن",
-  "home.promises.secureCheckoutDesc": "معلومات الدفع الخاصة بك محمية دائماً بتشفير عالي المستوى.",
+  "home.promises.secureCheckoutDesc": "الدفع عند الاستلام. سلّمي المبلغ للمندوب مباشرةً عند وصول طلبك.",
   "home.newsletter.title": "اشتركي في النشرة البريدية",
   "home.newsletter.subtitle": "اشتركي للحصول على عروض حصرية ومنتجات جديدة ونصائح تجميلية في بريدك الإلكتروني.",
   "home.newsletter.placeholder": "أدخلي بريدك الإلكتروني",

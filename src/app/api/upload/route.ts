@@ -11,6 +11,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    console.error("Upload failed: BLOB_READ_WRITE_TOKEN is not set in this environment.");
+    return NextResponse.json(
+      { error: "Image storage is not configured. Please add BLOB_READ_WRITE_TOKEN to the Vercel environment variables." },
+      { status: 500 }
+    );
+  }
+
   try {
     const formData = await request.formData();
     const file = formData.get("file") as File | null;
@@ -45,7 +53,11 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ url: blob.url });
   } catch (error) {
-    console.error("Upload failed:", error);
-    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
+    const message = error instanceof Error ? error.message : String(error);
+    console.error("Upload failed:", message);
+    return NextResponse.json(
+      { error: `Upload failed: ${message}` },
+      { status: 500 }
+    );
   }
 }

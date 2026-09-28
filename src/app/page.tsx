@@ -76,14 +76,6 @@ export default function HomePage() {
           style={{ backgroundImage: `url('${heroImage}')` }}
         />
         <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
-          <h1 className="mb-6 font-serif text-5xl font-bold leading-tight text-purple-200 md:text-7xl">
-            {t("home.hero.title1")}
-            <br />
-            <span className="text-purple-100">{t("home.hero.title2")}</span>
-          </h1>
-          <p className="mx-auto mb-10 max-w-xl text-lg text-purple-200/90 md:text-xl">
-            {t("home.hero.subtitle")}
-          </p>
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link
               href="/products"

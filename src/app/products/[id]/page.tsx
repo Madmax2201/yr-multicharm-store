@@ -197,6 +197,12 @@ export default function ProductDetailPage({
           setSelectedVariant(data.variants[0].id);
         }
 
+        // If this page was reached via a legacy id URL, swap the address bar
+        // to the clean slug so the shareable link is the readable one.
+        if (data.slug && data.slug !== id) {
+          router.replace(`/products/${data.slug}`);
+        }
+
         if (data.category) {
           fetch(`/api/products?category=${data.category}&limit=5`)
             .then((r) => r.json())
@@ -236,6 +242,7 @@ export default function ProductDetailPage({
     const item: CartItem = {
       id: product.id,
       productId: product.id,
+      slug: product.slug,
       name: product.name,
       price: currentPrice,
       image: images[0] || "/placeholder.svg",

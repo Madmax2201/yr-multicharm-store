@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireAdmin } from "@/lib/auth";
+import { uniqueProductSlug } from "@/lib/slug";
 
 export async function GET(request: NextRequest) {
   const admin = await requireAdmin(request);
@@ -36,6 +37,7 @@ export async function POST(request: NextRequest) {
   const product = await (prisma.product.create as any)({
     data: {
       name: data.name,
+      slug: await uniqueProductSlug(data.name),
       description: data.description,
       price: parseFloat(data.price),
       comparePrice: data.comparePrice ? parseFloat(data.comparePrice) : null,

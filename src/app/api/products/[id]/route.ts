@@ -7,16 +7,29 @@ export async function GET(
 ) {
   const { id } = await params;
 
-  const product = await prisma.product.findUnique({
-    where: { id },
-    include: {
-      variants: true,
-      reviews: {
-        include: { user: { select: { name: true } } },
-        orderBy: { createdAt: "desc" },
+  // The route segment is a slug (e.g. "braun-pro-5"), but old internal links,
+  // cart rows and bookmarks still use the cuid id, so fall back to an id lookup.
+  const product =
+    (await prisma.product.findUnique({
+      where: { slug: id },
+      include: {
+        variants: true,
+        reviews: {
+          include: { user: { select: { name: true } } },
+          orderBy: { createdAt: "desc" },
+        },
       },
-    },
-  });
+    })) ??
+    (await prisma.product.findUnique({
+      where: { id },
+      include: {
+        variants: true,
+        reviews: {
+          include: { user: { select: { name: true } } },
+          orderBy: { createdAt: "desc" },
+        },
+      },
+    }));
 
   if (!product) {
     return NextResponse.json({ error: "Product not found" }, { status: 404 });

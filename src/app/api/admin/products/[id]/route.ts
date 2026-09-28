@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireAdmin } from "@/lib/auth";
+import { uniqueProductSlug } from "@/lib/slug";
 
 export async function PUT(
   request: NextRequest,
@@ -14,10 +15,20 @@ export async function PUT(
   const { id } = await params;
   const data = await request.json();
 
+  // Keep the URL slug in sync with the product name.
+  const current = await prisma.product.findUnique({ where: { id } });
+  if (!current) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+  const slug = data.name && data.name !== current.name
+    ? await uniqueProductSlug(data.name, id)
+    : current.slug;
+
   const product = await prisma.product.update({
     where: { id },
     data: {
       name: data.name,
+      slug,
       description: data.description,
       price: typeof data.price === "string" ? parseFloat(data.price) : Number(data.price),
       comparePrice: data.comparePrice ? (typeof data.comparePrice === "string" ? parseFloat(data.comparePrice) : Number(data.comparePrice)) : null,

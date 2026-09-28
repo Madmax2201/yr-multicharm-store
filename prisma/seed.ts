@@ -5,6 +5,16 @@ import bcrypt from "bcryptjs";
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
 
+function slugify(text: string): string {
+  return (
+    text
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "") || "product"
+  );
+}
+
 async function main() {
   console.log("Seeding database...");
 
@@ -291,6 +301,7 @@ async function main() {
     await prisma.product.create({
       data: {
         ...data,
+        slug: slugify(data.name),
         variants: variants || undefined,
       },
     });

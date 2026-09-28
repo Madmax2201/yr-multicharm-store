@@ -31,8 +31,9 @@ model User {
 }
 
 model Product {
-  id           String   @id @default(cuid())
+  id           String  @id @default(cuid())
   name         String
+  slug         String  @unique
   description  String
   price        Float
   comparePrice Float?

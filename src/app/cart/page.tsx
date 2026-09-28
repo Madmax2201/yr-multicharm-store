@@ -132,7 +132,7 @@ export default function CartPage() {
                 className="flex gap-4 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 transition-all"
               >
                 <Link
-                  href={`/products/${item.productId}`}
+                  href={`/products/${item.slug || item.productId}`}
                   className="shrink-0 overflow-hidden rounded-xl bg-[var(--muted-bg)]"
                 >
                   <img
@@ -144,7 +144,7 @@ export default function CartPage() {
                 <div className="flex flex-1 flex-col justify-between">
                   <div>
                     <Link
-                      href={`/products/${item.productId}`}
+                      href={`/products/${item.slug || item.productId}`}
                       className="font-serif text-base font-semibold text-[var(--fg)] transition-colors hover:text-primary"
                     >
                       {item.name}

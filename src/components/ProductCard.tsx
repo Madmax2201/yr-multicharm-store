@@ -44,6 +44,7 @@ export function ProductCard({ product }: ProductCardProps) {
     const item: CartItem = {
       id: product.id,
       productId: product.id,
+      slug: productSlug,
       name: product.name,
       price: product.price,
       image: images[0] || "/placeholder.svg",

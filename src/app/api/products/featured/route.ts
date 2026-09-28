@@ -5,7 +5,8 @@ export async function GET() {
   const [products, reviewAggs] = await Promise.all([
     (prisma.product.findMany as any)({
       where: { isActive: true, featured: true },
-      take: 8,
+      take: 4,
+      orderBy: { createdAt: "desc" },
       include: {
         variants: true,
         _count: { select: { reviews: true } },

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Image as ImageIcon, Upload, Loader2, AlertCircle, RotateCcw, ExternalLink } from "lucide-react";
 import { uploadImage } from "@/lib/imageUpload";
+import FeaturedPicker from "@/components/admin/FeaturedPicker";
 
 const DEFAULT_HERO = "/images/hero-bg.jpg";
 
@@ -148,6 +149,8 @@ export default function AdminSettingsPage() {
           </p>
         )}
       </div>
+
+      <FeaturedPicker />
     </div>
   );
 }

@@ -9,7 +9,6 @@ const quickLinks = [
   { labelKey: "footer.shopAll", href: "/products" },
   { labelKey: "footer.newArrivals", href: "/products?sort=newest" },
   { labelKey: "footer.bestSellers", href: "/products?sort=bestsellers" },
-  { labelKey: "footer.aboutUs", href: "/about" },
   { labelKey: "footer.contact", href: "/contact" },
 ];
 

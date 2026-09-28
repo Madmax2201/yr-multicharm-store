@@ -19,7 +19,7 @@ const ar: Record<string, string> = {
   "home.categories.title": "تسوق حسب القسم",
   "home.categories.shopNow": "تسوق الآن",
   "home.promises.freeShipping": "شحن مجاني",
-  "home.promises.freeShippingDesc": "شحن مجاني للطلبات فوق 1,000 دينار جزائري. توصيل سريع وموثوق إلى باب منزلك.",
+  "home.promises.freeShippingDesc": "شحن مجاني للطلبات التي تحتوي على أكثر من منتجين. توصيل سريع وموثوق إلى باب منزلك.",
   "home.promises.easyReturns": "إرجاع سهل",
   "home.promises.easyReturnsDesc": "غير راضية؟ يمكنك إرجاع أي منتج خلال 30 يوماً لاسترداد كامل المبلغ. بدون طرح أسئلة.",
   "home.promises.secureCheckout": "دفع آمن",

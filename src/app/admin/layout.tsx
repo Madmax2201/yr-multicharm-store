@@ -17,6 +17,7 @@ import {
   ChevronLeft,
   MessageSquare,
   Settings,
+  ClipboardList,
 } from "lucide-react";
 
 export default function AdminLayout({
@@ -33,6 +34,7 @@ export default function AdminLayout({
     { href: "/admin/products", label: "Products", icon: Package },
     { href: "/admin/categories", label: "Categories", icon: Folder },
     { href: "/admin/orders", label: "Orders", icon: ShoppingCart },
+    { href: "/admin/leads", label: "Sponsorships", icon: ClipboardList },
     { href: "/admin/reviews", label: "Reviews", icon: MessageSquare },
     { href: "/admin/users", label: "Users", icon: Users },
     { href: "/admin/coupons", label: "Coupons", icon: Tag },

@@ -157,6 +157,23 @@ model Brand {
   createdAt DateTime @default(now())
 }
 
+model Lead {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  email     String?
+  wilaya    String?
+  quantity  Int?
+  message   String?
+  status    String   @default("PENDING")
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+}
+
 model SiteSetting {
   key       String   @id
   value     String

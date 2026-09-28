@@ -42,9 +42,16 @@ export async function POST(request: NextRequest) {
   const email = String(body.email || "").trim();
   const wilaya = String(body.wilaya || "").trim();
   const message = String(body.message || "").trim();
+  const honeypot = String(body.company || "").trim();
   const quantityRaw = body.quantity;
   const quantity =
     quantityRaw === "" || quantityRaw == null ? null : parseInt(quantityRaw, 10);
+
+  // A filled honeypot means a bot. Report success so it learns nothing, but
+  // never create the lead.
+  if (honeypot) {
+    return NextResponse.json({ success: true }, { status: 201 });
+  }
 
   if (name.length < 2) {
     return NextResponse.json({ error: "Please enter your full name." }, { status: 400 });

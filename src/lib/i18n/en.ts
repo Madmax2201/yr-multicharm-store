@@ -489,43 +489,159 @@ const en: Record<string, string> = {
   "category.fragrance": "Fragrance",
   "category.bathBody": "Bath & Body",
 
-  "kodo.badge": "Sponsorship opportunity",
-  "kodo.title": "KODO IPL Hair Removal",
+  "kodo.announce": "Sponsorship offer · Cash on delivery · Delivery to all 58 wilayas",
+  "kodo.navSpecs": "Specs",
+  "kodo.navUsage": "How to use",
+  "kodo.navFaq": "FAQ",
+  "kodo.orderNow": "Order now",
+  "kodo.eyebrow": "IPL hair removal device · 4 heads · cooling technology",
+  "kodo.title": "KODO — professional hair removal at home, at your own pace",
   "kodo.subtitle":
-    "900,000 flashes, 8 energy levels and 4 precision heads. Bring professional hair removal into your home, at your own price.",
-  "kodo.cta": "Apply to become a sponsor",
-  "kodo.ctaSecondary": "See the offer",
-  "kodo.priceLabel": "Retail price",
-  "kodo.f1Title": "900,000 flashes",
-  "kodo.f1Body": "Enough for years of full-body sessions without replacing the lamp.",
-  "kodo.f2Title": "8 energy levels",
-  "kodo.f2Body": "Start gentle and increase only as much as your skin tolerates.",
-  "kodo.f3Title": "4 precision heads",
-  "kodo.f3Body": "Face, body and sensitive areas each get a dedicated head.",
-  "kodo.f4Title": "Cooling technology",
-  "kodo.f4Body": "Keeps skin comfortable so longer sessions stay bearable.",
-  "kodo.howTitle": "How to use it",
-  "kodo.formTitle": "Become a KODO sponsor",
-  "kodo.formSubtitle":
-    "Fill in your details and our team will contact you to confirm your sponsorship.",
+    "A home IPL device built for people who want fewer salon appointments without changing their routine. Four heads, eight energy levels and a lamp rated for 900,000 flashes.",
+  "kodo.chipFlashes": "900,000 flashes",
+  "kodo.chipHeads": "4 heads",
+  "kodo.chipCod": "Cash on delivery",
+  "kodo.bullet1": "Works on face and body, with a dedicated head for each area",
+  "kodo.bullet2": "Start at level 1 and only go higher if your skin is comfortable",
+  "kodo.bullet3": "Pay the courier when the device arrives, nothing upfront",
+  "kodo.offerLabel": "Your sponsorship",
+  "kodo.offerBox": "1 KODO device · 4 heads · power cable",
+  "kodo.wasLabel": "instead of",
+  "kodo.saveLabel": "You save",
+  "kodo.ctaMain": "Order now — pay on delivery",
+  "kodo.reassure": "No online payment. No card details. You pay the courier in cash.",
+  "kodo.reassure2": "We call you to confirm before anything is shipped.",
+
+  "kodo.formTitle": "Reserve your KODO",
+  "kodo.formLead":
+    "Leave your name and number. A consultant calls you to confirm the order and delivery address.",
+  "kodo.hp": "Do not fill this field",
   "kodo.name": "Full name",
   "kodo.phone": "Phone number",
-  "kodo.email": "Email (optional)",
+  "kodo.phoneHint": "Algerian mobile: 05, 06 or 07.",
   "kodo.wilaya": "Wilaya",
   "kodo.wilayaPlaceholder": "Select your wilaya",
-  "kodo.quantity": "Units you want to sponsor (optional)",
-  "kodo.message": "Message (optional)",
-  "kodo.messagePlaceholder": "Anything we should know? Your shop, your plans, preferred delivery date...",
-  "kodo.submit": "Send my request",
+  "kodo.moreDetails": "Add details (optional)",
+  "kodo.email": "Email",
+  "kodo.quantity": "Units",
+  "kodo.message": "Anything we should know?",
+  "kodo.submitMain": "Yes, I confirm my order",
   "kodo.submitting": "Sending...",
+  "kodo.submitSub":
+    "Nothing is charged now. You pay the courier in cash on arrival.",
+  "kodo.formTimeline": "Order today → confirmation call → delivery in 24-48h.",
+  "kodo.savedNote": "Your details are used only to process this order.",
+
   "kodo.successTitle": "Request received",
   "kodo.successBody":
-    "Thank you. Our team will review your details and contact you shortly.",
+    "Thank you. A consultant will call you shortly to confirm your order and delivery address.",
   "kodo.another": "Submit another request",
-  "kodo.required": "Required",
-  "kodo.privacy":
-    "Your details are used only to process your sponsorship request.",
-  "kodo.backToShop": "Back to shop",
+
+  "kodo.specsTitle": "What you are actually getting",
+  "kodo.specsLead":
+    "No vague claims. These are the numbers printed on the box, and they are the reason this device lasts.",
+  "kodo.spec1Title": "900,000 flashes",
+  "kodo.spec1Body":
+    "The lamp is rated for 900,000 flashes. Used twice a week that is many years of full-body sessions before the lamp is ever a concern.",
+  "kodo.spec2Title": "8 energy levels",
+  "kodo.spec2Body":
+    "Eight levels let you start low on sensitive skin and increase only as far as you are comfortable. You stay in control of the intensity.",
+  "kodo.spec3Title": "4 precision heads",
+  "kodo.spec3Body":
+    "A different head for the face, the body, the bikini area and the underarms, because those areas do not tolerate the same intensity.",
+  "kodo.spec4Title": "Cooling technology",
+  "kodo.spec4Body":
+    "The handle cools the skin during a flash, which is what makes a 20-minute session bearable instead of something you dread.",
+  "kodo.specsNote":
+    "A beauty device, not a medical one. It slows visible regrowth and reduces hair over time with regular use. It does not remove follicles permanently, and results vary between people.",
+
+  "kodo.usageTitle": "How to use it",
+  "kodo.usageLead": "Three steps, twice or three times a week, on clean dry skin.",
+  "kodo.usage1Title": "Pick the right head",
+  "kodo.usage1Body":
+    "Use the face head on the face and the body head on the body. Using the wrong head on the wrong area is the most common mistake.",
+  "kodo.usage2Title": "Start at level 1",
+  "kodo.usage2Body":
+    "On clean, dry skin, with no lotion or makeup. Work on a small area first, wait 24 hours, then increase one level at a time.",
+  "kodo.usage3Title": "Be consistent",
+  "kodo.usage3Body":
+    "Two to three sessions a week is what produces visible results. Long gaps set you back far more than a missed session here and there.",
+  "kodo.usageNote":
+    "Do not use on tanned or sunburnt skin, over tattoos, moles or broken skin. Avoid sun exposure for 48 hours after a session.",
+
+  "kodo.stepsTitle": "Your order in 3 steps",
+  "kodo.step1Title": "You leave your details",
+  "kodo.step1Body": "Your name and number. Nothing else is required.",
+  "kodo.step2Title": "We confirm with you",
+  "kodo.step2Body": "A consultant calls to confirm the order, the address and the delivery date.",
+  "kodo.step3Title": "You receive and pay",
+  "kodo.step3Body": "The device arrives at your door. You pay the courier in cash on delivery.",
+  "kodo.noCard": "We never ask for a bank card. There is no online payment.",
+
+  "kodo.stat1Value": "58",
+  "kodo.stat1Label": "Wilayas covered",
+  "kodo.stat2Value": "900,000",
+  "kodo.stat2Label": "Flashes per lamp",
+  "kodo.stat3Value": "0 DA",
+  "kodo.stat3Label": "Paid upfront",
+
+  "kodo.transpTitle": "What we will never do",
+  "kodo.neverTitle": "What we will never do",
+  "kodo.never1": "Claim it removes hair permanently, or quote invented success rates",
+  "kodo.never2": "Hide the price behind a click, or add fees at checkout",
+  "kodo.never3": "Use a fake countdown timer to pressure you into deciding",
+  "kodo.alwaysTitle": "What you will always get",
+  "kodo.always1": "The real price, stated at the top of this page",
+  "kodo.always2": "A phone call from a real person before anything ships",
+  "kodo.always3": "Cash on delivery, every single order",
+
+  "kodo.reviewsTitle": "What customers say",
+  "kodo.reviewsNote":
+    "Reviews written by verified buyers on this store. Individual results vary, and this is not a promise of what you will experience.",
+
+  "kodo.precaTitle": "Is KODO right for you?",
+  "kodo.precaOkTitle": "It may suit you if",
+  "kodo.precaOk1": "You want to reduce salon appointments for hair removal",
+  "kodo.precaOk2": "You can commit to a regular 2-3 sessions a week",
+  "kodo.precaOk3": "You want a device you pay for once, without refills or consumables",
+  "kodo.precaAskTitle": "Ask a doctor first if",
+  "kodo.precaAsk1": "You are pregnant or breastfeeding",
+  "kodo.precaAsk2": "You take medication that increases sensitivity to light",
+  "kodo.precaAsk3": "You have a condition that affects skin pigmentation, or a history of skin cancer",
+  "kodo.precaAsk4": "You have recently used a chemical peel or laser treatment",
+  "kodo.precaLegal":
+    "KODO is a beauty device. It is not a medical device and does not treat any condition. Do not use it on tattoos, moles, irritated or broken skin, or over recently tanned skin. If you are unsure, ask your doctor or pharmacist.",
+
+  "kodo.faqTitle": "Questions",
+  "kodo.faq1Q": "How do I pay?",
+  "kodo.faq1A":
+    "Cash on delivery. You pay the courier in cash when the device reaches you. We never take a bank card and there is no online payment on this page.",
+  "kodo.faq2Q": "How long does delivery take?",
+  "kodo.faq2A":
+    "Usually 24 to 48 hours depending on your wilaya and availability. We call you to confirm the address and the date before shipping.",
+  "kodo.faq3Q": "What comes in the box?",
+  "kodo.faq3A":
+    "The KODO unit with its four heads, a power cable and a user guide. There are no refills, cartridges or consumables to buy later.",
+  "kodo.faq4Q": "Will it work on my skin?",
+  "kodo.faq4A":
+    "It works best on light to medium skin that is not tanned. Start at level 1 on a small area, wait 24 hours, then increase gradually. Do not use it if you are pregnant, breastfeeding or taking medication that increases light sensitivity.",
+  "kodo.faq5Q": "How often should I use it?",
+  "kodo.faq5A":
+    "Two to three times a week. Visible reduction usually appears after several weeks of consistent sessions, not after one or two uses.",
+  "kodo.faq6Q": "What happens after I submit the form?",
+  "kodo.faq6A":
+    "A consultant calls you to confirm the order, the quantity and the delivery address. Nothing is shipped before that call, and you can cancel at that point.",
+  "kodo.faq7Q": "Can I return it?",
+  "kodo.faq7A":
+    "Contact us within 24 hours of delivery if the device is faulty or not as described, and we will sort out a replacement or a refund.",
+
+  "kodo.finalTitle": "Reserve your KODO today",
+  "kodo.finalNote":
+    "Cash on delivery · Delivery to all 58 wilayas · We call before shipping",
+  "kodo.footerNote":
+    "KODO is a beauty device. It does not replace medical advice or treatment.",
+  "kodo.copyright": "YR Multicharm. All rights reserved.",
+  "kodo.backToShop": "Back to the shop",
 
   "leads.title": "Sponsorship Requests",
   "leads.subtitle": "Review and validate requests submitted from the KODO landing page.",

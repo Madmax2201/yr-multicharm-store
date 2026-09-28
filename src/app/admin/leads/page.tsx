@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useLanguage } from "@/lib/i18n/context";
+import { WILAYAS } from "@/lib/wilayas";
 import {
   Loader2,
   Trash2,
@@ -11,6 +12,16 @@ import {
   Search,
   StickyNote,
 } from "lucide-react";
+
+const WILAYA_BY_CODE = new Map(WILAYAS.map((w) => [w.code, w]));
+
+// New leads store the wilaya code; older ones stored the name straight away, so
+// anything that is not a known code is shown as it was received.
+function wilayaLabel(raw: string, locale: string): string {
+  const w = WILAYA_BY_CODE.get(raw.trim());
+  if (!w) return raw;
+  return locale === "ar" ? `${w.code} - ${w.ar}` : `${w.code} - ${w.en}`;
+}
 
 interface Lead {
   id: string;
@@ -43,7 +54,7 @@ const STATUS_STYLE: Record<string, string> = {
 };
 
 export default function AdminLeadsPage() {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [summary, setSummary] = useState<Summary | null>(null);
   const [tab, setTab] = useState<(typeof TABS)[number]>("ALL");
@@ -239,7 +250,7 @@ export default function AdminLeadsPage() {
                         {lead.email}
                       </a>
                     )}
-                    {lead.wilaya && <span>{lead.wilaya}</span>}
+                    {lead.wilaya && <span>{wilayaLabel(lead.wilaya, locale)}</span>}
                     {lead.quantity != null && (
                       <span>× {lead.quantity}</span>
                     )}

@@ -9,6 +9,7 @@
     "lint": "eslint",
     "db:push": "npx prisma db push",
     "db:seed": "npx tsx prisma/seed.ts",
+    "sync:kodo": "node scripts/sync-kodo.cjs",
     "postinstall": "npx prisma generate"
   },
   "prisma": {

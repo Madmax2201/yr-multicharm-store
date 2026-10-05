@@ -1,4 +1,4 @@
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f3e9f6;font-family:Cairo,Arial,sans-serif}img{display:block}button,input,select{font:inherit} .page-shell{min-height:100vh;padding:24px 0;overflow:hidden} .figma-1{transform-origin:top center} @media(max-width:533px){.page-shell{padding:0}.figma-1{margin:0!important}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f3e9f6;font-family:Cairo,Arial,sans-serif}img{display:block}button,input,select{font:inherit} .page-shell{min-height:100vh;padding:24px 0;overflow:hidden} .figma-1{transform-origin:top center} @media(max-width:533px){.page-shell{padding:0;position:relative!important}.figma-1{position:absolute!important;left:0!important;top:0!important;margin:0!important;transform-origin:top left!important}}
 .figma-1{width:533px;height:2112px;background:linear-gradient(90deg, #EBC7F8 0%, #F6DCFA 100%);overflow:hidden;position:relative;margin:0 auto}
 .figma-2{border-radius:450px;background:rgba(255, 255, 255, 0.23);position:absolute;left:35px;top:-105px}
 .figma-3{border-radius:350px;background:rgba(200, 135, 236, 0.16);position:absolute;left:-120px;top:170px}

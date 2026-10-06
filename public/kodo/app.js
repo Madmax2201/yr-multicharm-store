@@ -66,7 +66,7 @@
       showStatus('استقبال الطلبات غير مفعّل حالياً. يرجى التواصل معنا قبل إرسال الطلب.');
       return;
     }
-    if (now - lastAttemptAt < 10000) { showStatus('يرجى الانتظار قبل إعادة المحاولة.'); return; }
+    if (lastAttemptAt && now - lastAttemptAt < 10000) { showStatus('يرجى الانتظار قبل إعادة المحاولة.'); return; }
     lastAttemptAt = now;
 
     const payload = {

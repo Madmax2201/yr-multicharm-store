@@ -91,6 +91,8 @@
       if (!response.ok) throw new Error(`Order API: ${response.status}`);
       showStatus('وصل طلبك. سنتواصل معك لتأكيد التفاصيل قبل الشحن.', 'success');
       form.reset();
+      if (!localStorage.getItem('locale')) localStorage.setItem('locale', 'ar');
+      window.location.assign('/checkout/success');
     } catch (error) {
       console.error(error);
       showStatus('تعذر إرسال الطلب حالياً. يرجى المحاولة لاحقاً أو التواصل معنا عبر واتساب.');

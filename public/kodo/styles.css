@@ -189,7 +189,7 @@
 .figma-188{overflow:hidden;position:absolute;left:218px;top:12px}
 .figma-189{align-self:stretch;color:#654477;text-align:center;font-family:Cairo;font-size:11px;font-style:normal;font-weight:600;line-height:15px /* 136.364% */;position:relative}
 .figma-190{font-family:Cairo, -apple-system, Roboto, Helvetica, sans-serif;font-weight:600;font-size:11px;color:rgba(101,68,119,1)}
-.figma-191{display:inline-flex;padding:10px 73px 10px 16px;align-items:flex-start;gap:8px;background:linear-gradient(90deg, #732B92 0%, #3D125B 100%);box-shadow:0 -4px 16px 0 rgba(61, 18, 91, 0.33);position:absolute;left:0px;top:2056px;width:533px;height:56px}
+.figma-191{display:inline-flex;padding:10px 73px 10px 16px;align-items:flex-start;gap:8px;background:linear-gradient(90deg, #732B92 0%, #3D125B 100%);box-shadow:0 -4px 16px 0 rgba(61, 18, 91, 0.33);position:absolute;left:0px;top:2056px;width:533px;height:56px;color:#fff;text-decoration:none;cursor:pointer}
 .figma-192{display:flex;width:36px;height:36px;padding:5.04px;justify-content:center;align-items:center;border-radius:18px;background:#25D366;position:absolute;left:16px;top:10px}
 .figma-193{flex-shrink:0;overflow:hidden;position:absolute;left:5px;top:5px}
 .figma-194{width:400px;color:#FFF;text-align:center;font-family:Cairo;font-size:18px;font-style:normal;font-weight:700;line-height:23px /* 127.778% */;position:absolute;left:60px;top:11px;height:23px}
@@ -207,7 +207,7 @@ html{scroll-behavior:smooth}
 .figma-1{isolation:isolate}
 .price-hit{position:absolute;left:146px;top:602px;width:239px;height:49px;z-index:15;border-radius:25px;cursor:pointer}
 .price-hit:hover{background:rgba(255,255,255,.13)}
-.price-hit:focus-visible,[data-scroll-target]:focus-visible,.order-submit:focus-visible,#whatsapp-contact:focus-visible{outline:3px solid #f9d560;outline-offset:3px}
+.price-hit:focus-visible,[data-scroll-target]:focus-visible,.figma-191:focus-visible,.order-submit:focus-visible,#whatsapp-contact:focus-visible{outline:3px solid #f9d560;outline-offset:3px}
 [data-scroll-target]{cursor:pointer;transition:transform .23s ease,filter .23s ease,box-shadow .23s ease}
 [data-scroll-target]:hover{filter:brightness(1.12);transform:translateY(-2px)}
 [data-scroll-target]:active{transform:translateY(1px) scale(.985)}

@@ -1,17 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { generateOrderNumber } from "@/lib/utils";
 
 /**
  * Order endpoint for the standalone KODO landing page served at /kodo.
  *
  * The static page posts { fullName, phone, wilaya, municipality, address }.
- * This route validates that shape server side and stores it as a Lead, so
- * orders still land in the same admin inbox as /api/leads.
+ * This route validates that shape server side and stores it as a PENDING
+ * Order, so it lands in the admin Orders inbox waiting to be confirmed.
  *
  * The client supplied priceDzd is deliberately ignored: product and price are
  * set on the server, never trusted from the browser.
  */
 
+const KODO_PRICE = 55000;
 const PHONE_RE = /^[0-9+\s().-]{6,20}$/;
 
 // Keeps a single browser from flooding the inbox.
@@ -76,21 +78,34 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const details = [
-    municipality && `البلدية: ${municipality}`,
-    address && `العنوان: ${address}`,
-  ].filter(Boolean);
-
-  const lead = await prisma.lead.create({
+  const order = await prisma.order.create({
     data: {
-      name,
-      phone,
-      wilaya,
-      quantity: 1,
-      message: ["KODO", ...details].join(" — "),
+      orderNumber: generateOrderNumber(),
       status: "PENDING",
+      total: KODO_PRICE,
+      address: {
+        create: {
+          fullName: name,
+          street: address || municipality,
+          city: municipality,
+          state: wilaya,
+          zipCode: "",
+          phone,
+        },
+      },
+      items: {
+        create: [
+          {
+            productName: "KODO",
+            variantName: "جهاز KODO",
+            price: KODO_PRICE,
+            quantity: 1,
+          },
+        ],
+      },
     },
+    include: { address: true },
   });
 
-  return NextResponse.json({ success: true, id: lead.id }, { status: 201 });
+  return NextResponse.json({ success: true, id: order.id }, { status: 201 });
 }

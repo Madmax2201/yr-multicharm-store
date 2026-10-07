@@ -112,15 +112,15 @@ model Order {
 model OrderItem {
   id          String  @id @default(cuid())
   orderId     String
-  productId   String
+  productId   String?
   variantId   String?
   productName String
   variantName String?
   price       Float
   quantity    Int
 
-  order   Order   @relation(fields: [orderId], references: [id])
-  product Product @relation(fields: [productId], references: [id])
+  order   Order    @relation(fields: [orderId], references: [id])
+  product Product? @relation(fields: [productId], references: [id])
 }
 
 model WishlistItem {

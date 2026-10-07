@@ -165,13 +165,13 @@ export default function OrderDetail({
               <div>
                 <span className="text-rose-400">{t("admin.orderDetail.paymentMethod")}</span>
                 <p className="font-medium text-rose-900">
-                  {order.paymentMethod}
+                  {order.paymentMethod || "COD"}
                 </p>
               </div>
               <div>
                 <span className="text-rose-400">{t("admin.orderDetail.paymentStatus")}</span>
                 <p className="font-medium text-rose-900">
-                  {order.paymentStatus}
+                  {order.paymentStatus || "PENDING"}
                 </p>
               </div>
               <div>
@@ -285,16 +285,16 @@ export default function OrderDetail({
             <div className="space-y-3 text-sm">
               <div>
                 <span className="text-rose-400">{t("admin.orderDetail.name")}</span>
-                <p className="font-medium text-rose-900">{order.user.name}</p>
+                <p className="font-medium text-rose-900">{order.user?.name || order.fullName || "-"}</p>
               </div>
               <div>
                 <span className="text-rose-400">{t("admin.orderDetail.email")}</span>
-                <p className="font-medium text-rose-900">{order.user.email}</p>
+                <p className="font-medium text-rose-900">{order.user?.email || "-"}</p>
               </div>
               <div>
                 <span className="text-rose-400">{t("admin.orderDetail.phone")}</span>
                 <p className="font-medium text-rose-900">
-                  {order.user.phone || order.phone || "-"}
+                  {order.user?.phone || order.phone || "-"}
                 </p>
               </div>
             </div>

@@ -20,18 +20,23 @@ export async function PUT(
     return NextResponse.json({ error: "Invalid status" }, { status: 400 });
   }
 
-  const order = await (prisma.order.update as any)({
+  const order = await prisma.order.update({
     where: { id },
-    data: { status, paymentStatus: status === "DELIVERED" ? "PAID" : undefined },
-    include: { user: { select: { name: true, email: true } } },
+    data: { status },
+    include: {
+      user: { select: { name: true, email: true } },
+      address: true,
+    },
   });
 
-  sendOrderStatusUpdate({
-    orderNumber: order.orderNumber,
-    email: order.user.email,
-    fullName: order.fullName,
-    status: order.status,
-  });
+  if (order.user?.email) {
+    sendOrderStatusUpdate({
+      orderNumber: order.orderNumber,
+      email: order.user.email,
+      fullName: order.address?.fullName || order.user.name,
+      status: order.status,
+    });
+  }
 
   return NextResponse.json(order);
 }
@@ -51,6 +56,7 @@ export async function GET(
     where: { id },
     include: {
       user: { select: { name: true, email: true, phone: true } },
+      address: true,
       items: true,
     },
   });
@@ -59,5 +65,13 @@ export async function GET(
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  return NextResponse.json(order);
+  return NextResponse.json({
+    ...order,
+    fullName: order.address?.fullName || "",
+    street: order.address?.street || "",
+    city: order.address?.city || "",
+    state: order.address?.state || "",
+    zipCode: order.address?.zipCode || "",
+    phone: order.address?.phone || "",
+  });
 }
